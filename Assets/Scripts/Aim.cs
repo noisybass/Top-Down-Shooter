@@ -47,6 +47,7 @@ public class Aim : MonoBehaviour {
 
         Vector3 worldPos = Vector3.zero;
         worldPos = _cameraMain.ScreenToWorldPoint(mousePos);
+        worldPos.z = 0.0f;
 
         transform.position = worldPos;
     }

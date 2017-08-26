@@ -275,6 +275,16 @@ Prefab:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 50579423542091220, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: m_UseFullKinematicContacts
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50579423542091220, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
   m_IsPrefabParent: 0
@@ -319,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c863e8f4ae34dc6499411d9ee9fac8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: 1
+  _controller: 0
   _controllerSpeed: 7
   _controllerRadius: 3
   _controllerMinRadiusFactor: 0.3
@@ -381,7 +391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1723453829
 SpriteRenderer:
   m_ObjectHideFlags: 0
