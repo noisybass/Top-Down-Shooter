@@ -6,11 +6,15 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     private float _playerSpeed = 2.0f;
+    [SerializeField]
+    private GameObject _aim;
 
-	// Use this for initialization
-	void Start () {
-        
-	}
+    private SpriteRenderer _renderer;
+
+	void Awake()
+    {
+        _renderer = GetComponent<SpriteRenderer>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -30,5 +34,10 @@ public class Player : MonoBehaviour {
             movement.y += deltaSpeed;
 
         transform.position += movement;
+
+        if (_aim.transform.position.x < transform.position.x)
+            _renderer.flipX = true;
+        else
+            _renderer.flipX = false;
     }
 }

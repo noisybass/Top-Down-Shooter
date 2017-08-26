@@ -50,3 +50,6 @@ TagManager:
   - name: Characters
     uniqueID: 1832973879
     locked: 0
+  - name: Aim
+    uniqueID: 3590440885
+    locked: 0
