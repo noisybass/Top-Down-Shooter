@@ -21,6 +21,10 @@ public class Aim : MonoBehaviour {
     private Camera _cameraMain;
 
     private Vector2 _direction = new Vector2(0, 1);
+    public Vector2 Direction
+    {
+        get { return _direction; }
+    }
 
 	void Awake()
     {

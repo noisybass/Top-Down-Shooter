@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float _maxYMovement = 4.0f;
     [SerializeField]
-    private GameObject _aim;
+    private Aim _aim;
 
     private SpriteRenderer _renderer;
 
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // MOVEMENT
         float axis_h = Input.GetAxisRaw("Horizontal");
         float axis_v = Input.GetAxisRaw("Vertical");
 
@@ -47,5 +48,11 @@ public class Player : MonoBehaviour {
             _renderer.flipX = true;
         else
             _renderer.flipX = false;
+
+        // SHOOTING
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("SHOOT!");
+        }
     }
 }
