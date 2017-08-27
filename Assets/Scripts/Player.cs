@@ -7,6 +7,10 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float _playerSpeed = 2.0f;
     [SerializeField]
+    private float _maxXMovement = 5.0f;
+    [SerializeField]
+    private float _maxYMovement = 4.0f;
+    [SerializeField]
     private GameObject _aim;
 
     private SpriteRenderer _renderer;
@@ -33,7 +37,11 @@ public class Player : MonoBehaviour {
         if (axis_v > 0)
             movement.y += deltaSpeed;
 
-        transform.position += movement;
+        Vector3 newPos = transform.position;
+        newPos += movement;
+        newPos.x = Mathf.Clamp(newPos.x, -_maxXMovement, _maxXMovement);
+        newPos.y = Mathf.Clamp(newPos.y, -_maxYMovement, _maxYMovement);
+        transform.position = newPos;
 
         if (_aim.transform.position.x < transform.position.x)
             _renderer.flipX = true;
