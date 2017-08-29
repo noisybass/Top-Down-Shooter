@@ -12,8 +12,12 @@ public class Player : MonoBehaviour {
     private float _maxYMovement = 4.0f;
     [SerializeField]
     private Aim _aim;
+    [SerializeField]
+    private Bullet _bulletPrefab;
 
     private SpriteRenderer _renderer;
+
+    private bool _canShoot = true;
 
 	void Awake()
     {
@@ -50,9 +54,24 @@ public class Player : MonoBehaviour {
             _renderer.flipX = false;
 
         // SHOOTING
-        if (Input.GetMouseButtonDown(0))
+        if (_canShoot)
         {
-            Debug.Log("SHOOT!");
+            if (Input.GetAxisRaw("Shoot") == 1.0f)
+            {
+                _canShoot = false;
+                Debug.Log("SHOOT!");
+                Bullet bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
+                bullet.Direction = _aim.Direction;
+            }
         }
+        else
+            _canShoot = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Enemy")
+            Debug.Log("AY");
+
     }
 }
