@@ -162,6 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 539614115}
   - component: {fileID: 539614114}
+  - component: {fileID: 539614116}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -195,6 +196,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539614116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 539614113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c903979bfc3fd0a4ab02072163c33307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &823315984
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,8 +312,8 @@ MonoBehaviour:
   _aim: {fileID: 1300077098}
   _maxOffsetXFactor: 0.6
   _maxOffsetYFactor: 0.6
-  _shakeAmount: 0.7
-  _shakeSeconds: 1
+  _shakeAmount: 0.05
+  _shakeSeconds: 0.05
 --- !u!1 &941414649 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1114361991306024, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
@@ -408,11 +420,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4561715990909524, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.063989
       objectReference: {fileID: 0}
     - target: {fileID: 4561715990909524, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0763626
       objectReference: {fileID: 0}
     - target: {fileID: 4561715990909524, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
       propertyPath: m_LocalPosition.z

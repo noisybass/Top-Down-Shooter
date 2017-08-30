@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     private Aim _aim;
     [SerializeField]
     private Bullet _bulletPrefab;
+    private Pool<Bullet> _bulletPool;
 
     private SpriteRenderer _renderer;
 
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour {
     {
         _renderer = GetComponent<SpriteRenderer>();
         _shootEvent = new ShootEvent();
+        _bulletPool = new Pool<Bullet>(20, _bulletPrefab, gameObject);
     }
 	
 	// Update is called once per frame
@@ -60,11 +62,23 @@ public class Player : MonoBehaviour {
         if (shoot)
         {
             Debug.Log("SHOOT!");
-            Bullet bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
-            bullet.Direction = _aim.Direction;
+            CreateBullet();
             EventManager.Instance.OnEvent(this, _shootEvent);
         }
 
+    }
+
+    void CreateBullet()
+    {
+        Bullet bullet = _bulletPool.CreateObject();
+        bullet.transform.position = transform.position;
+        bullet.Direction = _aim.Direction;
+        bullet.gameObject.SetActive(true);
+    }
+
+    public void DestroyBullet(Bullet bullet)
+    {
+        _bulletPool.DestroyObject(bullet);
     }
 
     void OnCollisionEnter2D(Collision2D col)

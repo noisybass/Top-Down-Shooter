@@ -8,14 +8,19 @@ public class EnemySpawner : MonoBehaviour {
     private Enemy _enemyPrefab;
     [SerializeField]
     private Transform _enemiesTarget;
+    private Pool<Enemy> _enemyPool;
+
     [SerializeField]
     private float _spawnSeconds = 2.0f;
     [SerializeField]
     private float _spawnDistance = 10.0f;
     private Vector2 _center;
 
+    
+
     void Awake () {
         _center = transform.position;
+        _enemyPool = new Pool<Enemy>(10, _enemyPrefab, gameObject);
 	}
 
     void Start()
@@ -27,12 +32,30 @@ public class EnemySpawner : MonoBehaviour {
     {
         while(true)
         {
-            Vector3 spawnPos = Vector3.zero;
-            spawnPos.x = _spawnDistance * Random.Range(-1.0f, 1.0f) + _center.x;
-            spawnPos.y = _spawnDistance * Random.Range(-1.0f, 1.0f) + _center.y;
-            Enemy enemy = Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
-            enemy.Target = _enemiesTarget;
+            CreateEnemy();
             yield return new WaitForSeconds(_spawnSeconds);
         }
+    }
+
+    void CreateEnemy()
+    {
+        Vector3 spawnPos = Vector3.zero;
+        spawnPos.x = _spawnDistance * Random.Range(-1.0f, 1.0f) + _center.x;
+        spawnPos.y = _spawnDistance * Random.Range(-1.0f, 1.0f) + _center.y;
+
+        Enemy enemy = _enemyPool.CreateObject();
+        enemy.transform.position = spawnPos;
+        enemy.Target = _enemiesTarget;
+        enemy.gameObject.SetActive(true);
+    }
+
+    public void DestroyEnemy(Enemy enemy)
+    {
+        _enemyPool.DestroyObject(enemy);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, _spawnDistance);
     }
 }

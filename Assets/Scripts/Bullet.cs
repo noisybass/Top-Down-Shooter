@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour {
     {
         if (col.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
+            GetComponentInParent<Player>().DestroyBullet(this);
         }
     }
 }

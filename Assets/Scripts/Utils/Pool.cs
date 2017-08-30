@@ -2,45 +2,47 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ObjectPool
+public class Pool<T> where T : MonoBehaviour
 {
-    private List<GameObject> _pool;
+    private List<T> _pool;
 
-    public ObjectPool(int size, GameObject prefab)
+    public Pool(int size, T prefab)
     {
-        _pool = new List<GameObject>();
+        _pool = new List<T>();
         for (int i = 0; i < size; i++)
         {
-            GameObject obj = GameObject.Instantiate(prefab);
+            T obj = GameObject.Instantiate(prefab);
+            obj.gameObject.SetActive(false);
             _pool.Add(obj);
         }
     }
 
-    public ObjectPool(int size, GameObject prefab, GameObject parent)
+    public Pool(int size, T prefab, GameObject parent)
     {
-        _pool = new List<GameObject>();
+        _pool = new List<T>();
         for (int i = 0; i < size; i++)
         {
-            GameObject obj = GameObject.Instantiate(prefab);
+            T obj = GameObject.Instantiate(prefab);
             obj.transform.SetParent(parent.transform, false);
+            obj.gameObject.SetActive(false);
             _pool.Add(obj);
         }
     }
 
-    public GameObject CreateObject()
+    public T CreateObject()
     {
         if (_pool.Count > 0)
         {
-            GameObject obj = _pool[_pool.Count - 1];
+            T obj = _pool[_pool.Count - 1];
             _pool.RemoveAt(_pool.Count - 1);
             return obj;
         }
         return null;
     }
 
-    public void DestroyObject(GameObject obj)
+    public void DestroyObject(T obj)
     {
-        obj.SetActive(false);
+        obj.gameObject.SetActive(false);
         _pool.Add(obj);
     }
 
