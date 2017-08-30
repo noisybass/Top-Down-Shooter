@@ -19,15 +19,21 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float _maxOffsetYFactor = 0.6f;
 
-	// Use this for initialization
+    private float _shake = 0.0f;
+    [SerializeField]
+    private float _shakeAmount = 0.7f;
+    [SerializeField]
+    private float _shakeSeconds = 1.0f;
+
 	void Start () {
         _distanceToPlayer = transform.position - _player.transform.position;
         Vector2 maxOffset = Camera.main.ScreenToWorldPoint(Camera.main.pixelRect.max);
         _maxOffsetX = maxOffset.x * _maxOffsetXFactor;
         _maxOffsetY = maxOffset.y * _maxOffsetYFactor;
+
+        EventManager.Instance.AddHandler(EventManager.EventType.SHOOT, ShootEventHandler);
 	}
 	
-	// Update is called once per frame
 	void LateUpdate () {
         _offset = (_aim.transform.position - _player.transform.position) * 0.5f;
         if (Mathf.Abs(_offset.x) > _maxOffsetX)
@@ -42,6 +48,21 @@ public class CameraController : MonoBehaviour {
             _offset.y = Mathf.Clamp(_offset.y, -_maxOffsetY, _maxOffsetY);
             _offset.x = _offset.y / p;
         }
-        transform.position = _player.transform.position + _offset + _distanceToPlayer;
-	}
+        transform.localPosition = _player.transform.position + _offset + _distanceToPlayer;
+
+        if (_shake > 0.0f)
+        {
+            Vector3 displ = Random.insideUnitCircle * _shakeAmount;
+            displ.z = transform.localPosition.z;
+            transform.localPosition += displ;
+            _shake -= Time.deltaTime;
+        }
+        else
+            _shake = 0.0f;
+    }
+
+    public void ShootEventHandler(object sender, BaseEvent e)
+    {
+        _shake = _shakeSeconds;
+    }
 }

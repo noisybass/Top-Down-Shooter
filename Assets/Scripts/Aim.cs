@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Aim : MonoBehaviour {
 
-    [SerializeField]
-    private bool _controller = false;
-
     [Header("Controller Configuration")]
     [SerializeField]
     private float _controllerSpeed = 7.0f;
@@ -33,7 +30,7 @@ public class Aim : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (_controller)
+        if (GameManager.Instance.Settings.controller)
         {
             ControllerUpdate();
         }

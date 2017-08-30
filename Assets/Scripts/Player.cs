@@ -17,11 +17,12 @@ public class Player : MonoBehaviour {
 
     private SpriteRenderer _renderer;
 
-    private bool _canShoot = true;
+    private ShootEvent _shootEvent;
 
 	void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
+        _shootEvent = new ShootEvent();
     }
 	
 	// Update is called once per frame
@@ -54,18 +55,16 @@ public class Player : MonoBehaviour {
             _renderer.flipX = false;
 
         // SHOOTING
-        if (_canShoot)
+        bool shoot = GameManager.Instance.Settings.controller ? (Input.GetAxisRaw("Shoot") == 1.0f) : Input.GetMouseButtonDown(0);
+
+        if (shoot)
         {
-            if (Input.GetAxisRaw("Shoot") == 1.0f)
-            {
-                _canShoot = false;
-                Debug.Log("SHOOT!");
-                Bullet bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
-                bullet.Direction = _aim.Direction;
-            }
+            Debug.Log("SHOOT!");
+            Bullet bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
+            bullet.Direction = _aim.Direction;
+            EventManager.Instance.OnEvent(this, _shootEvent);
         }
-        else
-            _canShoot = true;
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
