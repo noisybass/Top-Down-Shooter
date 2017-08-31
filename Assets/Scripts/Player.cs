@@ -72,7 +72,8 @@ public class Player : MonoBehaviour {
     {
         Bullet bullet = _bulletPool.CreateObject();
         bullet.transform.position = transform.position;
-        bullet.Direction = _aim.Direction;
+        //bullet.Direction = _aim.Direction;
+        bullet.Direction = _aim.transform.position - transform.position;
         bullet.gameObject.SetActive(true);
     }
 
