@@ -10,22 +10,32 @@ public class Gun : MonoBehaviour {
     private SpriteRenderer _renderer;
 
 	void Awake () {
-        _renderer = GetComponent<SpriteRenderer>();
+        _renderer = GetComponentInChildren<SpriteRenderer>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-        if (_aim.Direction.y > 0.2f)
-            _renderer.sortingOrder = -1;
-        else
-            _renderer.sortingOrder = 1;
-
-        if (_aim.transform.position.x < transform.position.x)
-            _renderer.flipY = true;
-        else
-            _renderer.flipY = false;
-
+	void LateUpdate () {
         float rotationZ = Mathf.Atan2(_aim.Direction.y, _aim.Direction.x) * Mathf.Rad2Deg;
+        Debug.Log(rotationZ);
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+
+        if (_aim.Direction.y > 0.2f)
+        {
+            _renderer.sortingOrder = -1;
+        }
+        else
+        {
+            _renderer.sortingOrder = 1;
+        }
+
+        if (rotationZ <= 90 && rotationZ >= -90)
+        {
+            _renderer.flipY = false;
+        }
+        else
+        {
+            _renderer.flipY = true;
+            Debug.Log("FLIP");
+        }
+
     }
 }
