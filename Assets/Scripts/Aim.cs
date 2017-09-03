@@ -10,14 +10,14 @@ public class Aim : MonoBehaviour {
     [SerializeField]
     private float _controllerRadius = 3.0f;
     [SerializeField]
-    private float _controllerMinRadiusFactor = 0.3f;
+    private float _minInputMagnitude = 0.3f;
 
     [SerializeField]
     private GameObject _player;
 
     private Camera _cameraMain;
 
-    private Vector2 _direction = new Vector2(0, 1);
+    private Vector2 _direction = new Vector2(1, 0);
     public Vector2 Direction
     {
         get { return _direction; }
@@ -29,7 +29,7 @@ public class Aim : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
         if (GameManager.Instance.Settings.controller)
         {
             ControllerUpdate();
@@ -62,16 +62,24 @@ public class Aim : MonoBehaviour {
     {
         Vector2 input = new Vector2(Input.GetAxisRaw("RightJoystickX"), Input.GetAxisRaw("RightJoystickY"));
         input.y = -input.y;
-        if (input.magnitude > _controllerMinRadiusFactor)
+        if (input.magnitude > _minInputMagnitude)
+        {
             _direction = input;
+            _direction.Normalize();
+        }
 
-        input = _direction * Mathf.Max(_controllerMinRadiusFactor, input.magnitude);
-        Debug.Log(Mathf.Max(_controllerMinRadiusFactor, input.magnitude));
-        
+        input = _direction * Mathf.Max(_minInputMagnitude, input.magnitude);
+                
         Vector3 worldPos = Vector3.zero;
         worldPos.x = _controllerRadius * input.x + _player.transform.position.x;
         worldPos.y = _controllerRadius * input.y + _player.transform.position.y;
 
         transform.position = Vector3.Lerp(transform.position, worldPos, Time.deltaTime * _controllerSpeed);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(_player.transform.position, _minInputMagnitude * _controllerRadius);
+        Gizmos.DrawWireSphere(_player.transform.position, _controllerRadius);
     }
 }
