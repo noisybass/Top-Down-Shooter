@@ -7,10 +7,27 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private float _enemySpeed = 2.0f;
 
+    [SerializeField]
+    private float _enemyLife = 2.0f;
+    private float _currentLife;
+
+    [SerializeField]
+    private float _hitDisplacement = 4.0f;
+    private bool _hit = false;
+
     private Transform _target;
     public Transform Target
     {
         set { _target = value; }
+    }
+
+    public void Init(Vector3 pos, Transform target)
+    {
+        transform.position = pos;
+        _currentLife = _enemyLife;
+        _target = target;
+        _hit = false;
+        gameObject.SetActive(true);
     }
 	
 	void Update () {
@@ -21,9 +38,34 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Bullet")
+        if (!_hit && col.gameObject.tag == "Bullet")
         {
-            GetComponentInParent<EnemySpawner>().DestroyEnemy(this);
+            StartCoroutine(Hit(col.contacts[0].normal));
         }
+    }
+
+    IEnumerator Hit(Vector3 direction)
+    {
+        float displacement = 0.0f;
+
+        _hit = true;
+        while(displacement < _hitDisplacement)
+        {
+            Vector3 movement = direction * (_enemySpeed*5) * Time.deltaTime;
+            transform.position += movement;
+            displacement += movement.magnitude;
+            yield return null;
+        }
+        _currentLife--;
+        if (_currentLife == 0)
+            Die();
+        else
+            _hit = false;
+
+    }
+
+    void Die()
+    {
+        GetComponentInParent<EnemySpawner>().DestroyEnemy(this);
     }
 }

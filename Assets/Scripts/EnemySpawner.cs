@@ -44,9 +44,7 @@ public class EnemySpawner : MonoBehaviour {
         spawnPos.y = _spawnDistance * Random.Range(-1.0f, 1.0f) + _center.y;
 
         Enemy enemy = _enemyPool.CreateObject();
-        enemy.transform.position = spawnPos;
-        enemy.Target = _enemiesTarget;
-        enemy.gameObject.SetActive(true);
+        enemy.Init(spawnPos, _enemiesTarget);
     }
 
     public void DestroyEnemy(Enemy enemy)
