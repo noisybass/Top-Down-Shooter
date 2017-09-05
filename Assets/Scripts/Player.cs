@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private Bullet _bulletPrefab;
     private Pool<Bullet> _bulletPool;
+    private bool _canShoot = true;
 
     private SpriteRenderer _renderer;
 
@@ -57,12 +58,24 @@ public class Player : MonoBehaviour {
             _renderer.flipX = false;
 
         // SHOOTING
-        bool shoot = GameManager.Instance.Settings.controller ? (Input.GetAxisRaw("Shoot") == 1.0f) : Input.GetMouseButtonDown(0);
+        float shoot = 0.0f;
+        if (GameManager.Instance.Settings.controller)
+            shoot = Input.GetAxisRaw("Shoot");
+        else
+            shoot = Input.GetMouseButtonDown(0) ? 1.0f : 0.0f;
 
-        if (shoot)
+        if (shoot != 0.0f)
         {
-            CreateBullet();
-            EventManager.Instance.OnEvent(this, _shootEvent);
+            if (_canShoot)
+            {
+                _canShoot = false;
+                CreateBullet();
+                EventManager.Instance.OnEvent(this, _shootEvent);
+            }
+        }
+        else
+        {
+            _canShoot = true;
         }
 
     }

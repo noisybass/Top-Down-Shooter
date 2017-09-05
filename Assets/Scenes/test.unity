@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    controller: 0
+    controller: 1
 --- !u!4 &539614115
 Transform:
   m_ObjectHideFlags: 0
