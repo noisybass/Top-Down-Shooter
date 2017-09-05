@@ -15,7 +15,6 @@ public class Gun : MonoBehaviour {
 	
 	void LateUpdate () {
         float rotationZ = Mathf.Atan2(_aim.Direction.y, _aim.Direction.x) * Mathf.Rad2Deg;
-        Debug.Log(rotationZ);
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
         if (_aim.Direction.y > 0.2f)
@@ -34,7 +33,6 @@ public class Gun : MonoBehaviour {
         else
         {
             _renderer.flipY = true;
-            Debug.Log("FLIP");
         }
 
     }

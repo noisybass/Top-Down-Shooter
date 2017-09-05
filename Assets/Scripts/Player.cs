@@ -61,7 +61,6 @@ public class Player : MonoBehaviour {
 
         if (shoot)
         {
-            Debug.Log("SHOOT!");
             CreateBullet();
             EventManager.Instance.OnEvent(this, _shootEvent);
         }
@@ -71,10 +70,7 @@ public class Player : MonoBehaviour {
     void CreateBullet()
     {
         Bullet bullet = _bulletPool.CreateObject();
-        bullet.transform.position = transform.position;
-        //bullet.Direction = _aim.Direction;
-        bullet.Direction = _aim.transform.position - transform.position;
-        bullet.gameObject.SetActive(true);
+        bullet.Init(transform.position, _aim.transform.position - transform.position);
     }
 
     public void DestroyBullet(Bullet bullet)
