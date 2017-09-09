@@ -5,11 +5,16 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    private float _playerSpeed = 2.0f;
+    private float _playerSpeed = 20.0f;
     [SerializeField]
-    private float _maxXMovement = 5.0f;
+    private float _maxXMovement = 50.0f;
     [SerializeField]
-    private float _maxYMovement = 4.0f;
+    private float _maxYMovement = 40.0f;
+    [SerializeField]
+    private float _hitDisplacement = 5.0f;
+    private bool _hit = false;
+
+    [Space(20)]
     [SerializeField]
     private Aim _aim;
     [SerializeField]
@@ -18,12 +23,16 @@ public class Player : MonoBehaviour {
     private bool _canShoot = true;
 
     private SpriteRenderer _renderer;
+    private Animator _anim;
+    int _playerSpeedHash = Animator.StringToHash("playerSpeed");
+    int _playerHitHash = Animator.StringToHash("playerHit");
 
     private ShootEvent _shootEvent;
 
 	void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
         _shootEvent = new ShootEvent();
         _bulletPool = new Pool<Bullet>(20, _bulletPrefab, gameObject);
     }
@@ -45,6 +54,8 @@ public class Player : MonoBehaviour {
             movement.y -= deltaSpeed;
         if (axis_v > 0)
             movement.y += deltaSpeed;
+
+        _anim.SetFloat(_playerSpeedHash, movement.sqrMagnitude);
 
         Vector3 newPos = transform.position;
         newPos += movement;
@@ -83,7 +94,7 @@ public class Player : MonoBehaviour {
     void CreateBullet()
     {
         Bullet bullet = _bulletPool.CreateObject();
-        bullet.Init(transform.position, _aim.transform.position - transform.position);
+        bullet.Init(transform.position, (_aim.transform.position - transform.position).normalized);
     }
 
     public void DestroyBullet(Bullet bullet)
@@ -93,8 +104,31 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Enemy")
+        if (!_hit && col.gameObject.tag == "Enemy")
+        {
             Debug.Log("AY");
+            
+            StartCoroutine(Hit(col.contacts[0].normal));
+        }
+            
+
+    }
+
+    IEnumerator Hit(Vector3 direction)
+    {
+        float displacement = 0.0f;
+
+        _anim.SetTrigger(_playerHitHash);
+        _hit = true;
+
+        while (displacement < _hitDisplacement)
+        {
+            Vector3 movement = direction * (_playerSpeed * 2) * Time.deltaTime;
+            transform.position += movement;
+            displacement += movement.magnitude;
+            yield return null;
+        }
+        _hit = false;
 
     }
 }
