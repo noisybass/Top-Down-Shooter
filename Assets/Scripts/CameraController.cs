@@ -25,6 +25,14 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float _shakeSeconds = 1.0f;
 
+
+    void Awake()
+    {
+        int height = Screen.height;
+        int size = 24;
+        GetComponent<Camera>().orthographicSize = height / (2 * size);
+    }
+
 	void Start () {
         _distanceToPlayer = transform.position - _player.transform.position;
         Vector2 maxOffset = Camera.main.ScreenToWorldPoint(Camera.main.pixelRect.max);
