@@ -123,7 +123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &36407881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,12 +268,12 @@ Prefab:
     - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
         type: 2}
       propertyPath: _maxXMovement
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
         type: 2}
       propertyPath: _maxYMovement
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
         type: 2}
@@ -294,6 +294,30 @@ Prefab:
         type: 2}
       propertyPath: m_Offset.y
       value: -0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233013470917600, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1519963667026198, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114361991306024, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976319991512028, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1557871570359882, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114361991306024, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 95531857740501518, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
@@ -448,7 +472,9 @@ GameObject:
   - component: {fileID: 1965183761}
   - component: {fileID: 1965183762}
   - component: {fileID: 1965183760}
-  m_Layer: 0
+  - component: {fileID: 1965183764}
+  - component: {fileID: 1965183763}
+  m_Layer: 11
   m_Name: Dog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,6 +547,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8abe2d43798389143bac234038618b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dogSpeed: 80
+  _idleDistToPlayer: 30
+  _chaseDistToTarget: 50
+  _player: {fileID: 941414655}
+--- !u!61 &1965183763
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1965183759}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.2, y: -0.31}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3, y: 3}
+    newSize: {x: 3, y: 3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.64, y: 1.55}
+  m_EdgeRadius: 0
+--- !u!50 &1965183764
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1965183759}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2029182227
 GameObject:
   m_ObjectHideFlags: 0

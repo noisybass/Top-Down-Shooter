@@ -51,35 +51,38 @@ public class Enemy : MonoBehaviour {
     }
 	
 	void Update () {
-        Vector2 direction = (_target.position - transform.position).normalized;
-        Vector3 movement = direction * _enemySpeed * Time.deltaTime;
-        transform.position += movement;
+        if (_target != null)
+        {
+            Vector2 direction = (_target.position - transform.position).normalized;
+            Vector3 movement = direction * _enemySpeed * Time.deltaTime;
+            transform.position += movement;
 
-        _renderer.sortingOrder = -(int)transform.position.y;
+            _renderer.sortingOrder = -(int)transform.position.y;
+        }
 	}
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (!_hit && col.gameObject.tag == "Bullet")
+        if (!_hit && (col.gameObject.tag == "Bullet" || col.gameObject.tag == "Dog"))
         {
-            StartCoroutine(Hit(col.contacts[0].normal));
+            StartCoroutine(Hit(col.contacts[0].normal, col.gameObject.tag == "Dog"));
         }
     }
 
-    IEnumerator Hit(Vector3 direction)
+    IEnumerator Hit(Vector3 direction, bool isDog)
     {
         float displacement = 0.0f;
 
         _hit = true;
         while(displacement < _hitDisplacement)
         {
-            Vector3 movement = direction * (_enemySpeed*5) * Time.deltaTime;
+            Vector3 movement = direction * (_enemySpeed * 5) * Time.deltaTime;
             transform.position += movement;
             displacement += movement.magnitude;
             yield return null;
         }
         _currentLife--;
-        if (_currentLife == 0)
+        if (isDog || _currentLife == 0)
             Die();
         else
             _hit = false;

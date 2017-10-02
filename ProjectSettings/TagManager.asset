@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Bullet
+  - Dog
   layers:
   - Default
   - TransparentFX
@@ -16,9 +17,9 @@ TagManager:
   - 
   - 
   - Block
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Dog
   - 
   - 
   - 
