@@ -7,7 +7,13 @@ public class Dog : MonoBehaviour {
     private float _upp;
     private float _dogSpeed = 16;
 
-	// Use this for initialization
+    private SpriteRenderer _renderer;
+
+	void Awake()
+    {
+        _renderer = GetComponent<SpriteRenderer>();
+    }
+
 	void Start () {
         PixelsToUnits();
 	}
@@ -18,4 +24,8 @@ public class Dog : MonoBehaviour {
         _dogSpeed = _dogSpeed * _upp;
     }
 
+    void Update()
+    {
+        _renderer.sortingOrder = -(int)transform.position.y;
+    }
 }

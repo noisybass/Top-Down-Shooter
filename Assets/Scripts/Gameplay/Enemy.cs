@@ -22,6 +22,13 @@ public class Enemy : MonoBehaviour {
         set { _target = value; }
     }
 
+    private SpriteRenderer _renderer;
+
+    void Awake()
+    {
+        _renderer = GetComponent<SpriteRenderer>();
+    }
+
     void Start()
     {
         PixelsToUnits();
@@ -47,6 +54,8 @@ public class Enemy : MonoBehaviour {
         Vector2 direction = (_target.position - transform.position).normalized;
         Vector3 movement = direction * _enemySpeed * Time.deltaTime;
         transform.position += movement;
+
+        _renderer.sortingOrder = -(int)transform.position.y;
 	}
 
     void OnCollisionEnter2D(Collision2D col)

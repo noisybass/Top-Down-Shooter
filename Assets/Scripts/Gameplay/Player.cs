@@ -85,6 +85,7 @@ public class Player : MonoBehaviour {
             _renderer.flipX = true;
         else
             _renderer.flipX = false;
+        _renderer.sortingOrder = -(int)transform.position.y;
 
         // SHOOTING
         float shoot = 0.0f;
