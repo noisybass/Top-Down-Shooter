@@ -5,9 +5,23 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager> {
 
     [System.Serializable]
+    public struct ConfigData
+    {
+        public int PPU;
+        public float UPP;
+    }
+
+    [System.Serializable]
     public struct SettingsData
     {
         public bool controller;
+    }
+
+    [SerializeField]
+    private ConfigData _config;
+    public ConfigData Config
+    {
+        get { return _config; }
     }
 
     [SerializeField]
@@ -17,10 +31,12 @@ public class GameManager : Singleton<GameManager> {
         get { return _settings; }
     }
 
-    //protected override void Awake()
-    //{
-    //    base.Awake();
-    //}
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _config.UPP = 1.0f / _config.PPU;
+    }
 
     void Start () {
 		

@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    private float _upp;
     [SerializeField]
-    private float _playerSpeed = 20.0f;
+    private float _playerSpeed = 150;
     [SerializeField]
-    private float _maxXMovement = 50.0f;
+    private float _maxXMovement = 100;
     [SerializeField]
-    private float _maxYMovement = 40.0f;
+    private float _maxYMovement = 50;
     [SerializeField]
     private float _hitDisplacement = 5.0f;
     private bool _hit = false;
@@ -29,12 +30,29 @@ public class Player : MonoBehaviour {
 
     private ShootEvent _shootEvent;
 
+    private int _ppu;
+
 	void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
         _shootEvent = new ShootEvent();
         _bulletPool = new Pool<Bullet>(20, _bulletPrefab, gameObject);
+    }
+
+    
+    void Start()
+    {
+        PixelsToUnits();
+    }
+
+    private void PixelsToUnits()
+    {
+        _upp = GameManager.Instance.Config.UPP;
+        _playerSpeed = _playerSpeed * _upp;
+        _maxXMovement = _maxXMovement * _upp;
+        _maxYMovement = _maxYMovement * _upp;
+        _hitDisplacement = _hitDisplacement * _upp;
     }
 	
 	// Update is called once per frame
@@ -106,12 +124,8 @@ public class Player : MonoBehaviour {
     {
         if (!_hit && col.gameObject.tag == "Enemy")
         {
-            Debug.Log("AY");
-            
             StartCoroutine(Hit(col.contacts[0].normal));
-        }
-            
-
+        }  
     }
 
     IEnumerator Hit(Vector3 direction)
