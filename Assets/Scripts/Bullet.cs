@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
+    private float _upp;
     [SerializeField]
-    private float _bulletSpeed = 2.0f;
+    private float _bulletSpeed = 10;
 
     [SerializeField]
     private float _timeToLife = 2.0f;
@@ -15,6 +16,17 @@ public class Bullet : MonoBehaviour {
     public Vector2 Direction
     {
         set { _direction = value; }
+    }
+
+    void Start()
+    {
+        PixelsToUnits();
+    }
+
+    private void PixelsToUnits()
+    {
+        _upp = GameManager.Instance.Config.UPP;
+        _bulletSpeed = _bulletSpeed * _upp;
     }
 
     public void Init(Vector3 pos, Vector2 direction)

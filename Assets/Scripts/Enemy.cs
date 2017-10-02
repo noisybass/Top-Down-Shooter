@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+    private float _upp;
     [SerializeField]
-    private float _enemySpeed = 2.0f;
+    private float _enemySpeed = 100;
 
     [SerializeField]
     private float _enemyLife = 2.0f;
     private float _currentLife;
 
     [SerializeField]
-    private float _hitDisplacement = 4.0f;
+    private float _hitDisplacement = 5;
     private bool _hit = false;
 
     private Transform _target;
     public Transform Target
     {
         set { _target = value; }
+    }
+
+    void Start()
+    {
+        PixelsToUnits();
     }
 
     public void Init(Vector3 pos, Transform target)
@@ -28,6 +34,13 @@ public class Enemy : MonoBehaviour {
         _target = target;
         _hit = false;
         gameObject.SetActive(true);
+    }
+
+    private void PixelsToUnits()
+    {
+        _upp = GameManager.Instance.Config.UPP;
+        _enemySpeed = _enemySpeed * _upp;
+        _hitDisplacement = _hitDisplacement * _upp;
     }
 	
 	void Update () {

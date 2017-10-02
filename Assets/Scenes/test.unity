@@ -123,7 +123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &36407881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61de0f524931ae4dac4fe4a4d1d55c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _config:
+    PPU: 8
+    UPP: 0
   _settings:
     controller: 0
 --- !u!4 &539614115
@@ -249,7 +252,7 @@ Prefab:
     - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
         type: 2}
       propertyPath: _hitDisplacement
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 212612153258034038, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
         type: 2}
@@ -257,6 +260,41 @@ Prefab:
       value: 
       objectReference: {fileID: 21300014, guid: 86c65b987eb32f740823725d6ef943f4,
         type: 3}
+    - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: _playerSpeed
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: _maxXMovement
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: _maxYMovement
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: _playerSpeedPx
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 61536213820249556, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 61536213820249556, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 61536213820249556, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: -0.21
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 95531857740501518, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
@@ -408,6 +446,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1965183761}
+  - component: {fileID: 1965183762}
   - component: {fileID: 1965183760}
   m_Layer: 0
   m_Name: Dog
@@ -471,6 +510,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1965183762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1965183759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abe2d43798389143bac234038618b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2029182227
 GameObject:
   m_ObjectHideFlags: 0
