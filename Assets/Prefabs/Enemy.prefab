@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemySpeed: 20
   _enemyLife: 2
-  _hitDisplacement: 5
+  _hitDisplacement: 10
 --- !u!212 &212479407498695696
 SpriteRenderer:
   m_ObjectHideFlags: 1
