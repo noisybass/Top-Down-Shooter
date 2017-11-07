@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 86c65b987eb32f740823725d6ef943f4
-timeCreated: 1506701419
+timeCreated: 1509992183
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -254,20 +254,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Player_11
-      rect:
-        serializedVersion: 2
-        x: 72
         y: 0
         width: 24
         height: 24
