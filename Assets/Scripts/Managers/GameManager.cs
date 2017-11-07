@@ -5,10 +5,11 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager> {
 
     [System.Serializable]
-    public struct ConfigData
+    public struct GraphicsConfigData
     {
-        public int PPU;
-        public float UPP;
+        public float PPU;
+        [Range(1, 4)]
+        public int pixelScale;
     }
 
     [System.Serializable]
@@ -17,9 +18,16 @@ public class GameManager : Singleton<GameManager> {
         public bool controller;
     }
 
+    [System.Serializable]
+    public struct GameplayData
+    {
+        public int highScore;
+        public int score;
+    }
+
     [SerializeField]
-    private ConfigData _config;
-    public ConfigData Config
+    private GraphicsConfigData _config;
+    public GraphicsConfigData Config
     {
         get { return _config; }
     }
@@ -31,16 +39,20 @@ public class GameManager : Singleton<GameManager> {
         get { return _settings; }
     }
 
+    private GameplayData _data;
+    public GameplayData Data
+    {
+        get { return _data; }
+    }
+
     protected override void Awake()
     {
         base.Awake();
-
-        _config.UPP = 1.0f / _config.PPU;
     }
 
     void Start () {
-		
-	}
+
+    }
 	
 	void Update () {
 		

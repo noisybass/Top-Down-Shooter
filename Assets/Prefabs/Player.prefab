@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 50579423542091220}
   - component: {fileID: 61536213820249556}
   - component: {fileID: 212612153258034038}
-  - component: {fileID: 95531857740501518}
-  m_Layer: 8
+  - component: {fileID: 95702326083964958}
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -40,8 +40,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4844207412837774}
   - component: {fileID: 212610201024349512}
-  m_Layer: 8
-  m_Name: Weapon
+  m_Layer: 9
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,8 +56,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4784091702160468}
   - component: {fileID: 114677648909493964}
-  m_Layer: 8
-  m_Name: WeaponParent
+  m_Layer: 9
+  m_Name: Slingshot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4621340901629332}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: WeaponSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4581788123210158}
   - component: {fileID: 212776797176812520}
   - component: {fileID: 114417051959570002}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,8 +143,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519963667026198}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.16, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4844207412837774}
@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233013470917600}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.199, y: 0, z: 0}
+  m_LocalPosition: {x: 0.426, y: -0.441, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4784091702160468}
@@ -196,20 +196,20 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.21}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 3, y: 3}
-    newSize: {x: 0.33333334, y: 0.33333334}
+    newSize: {x: 24, y: 24}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.49, y: 1.8}
   m_EdgeRadius: 0
---- !u!95 &95531857740501518
+--- !u!95 &95702326083964958
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -252,10 +252,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f492077cd9748148b6ea8dd2df693fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSpeed: 20
-  _maxXMovement: 50
-  _maxYMovement: 40
+  _playerSpeed: 150
+  _maxXMovement: 200
+  _maxYMovement: 100
+  _hitDisplacement: 5
   _aim: {fileID: 114417051959570002}
+  _slingshot: {fileID: 114677648909493964}
   _bulletPrefab: {fileID: 114321954084774644, guid: 59d0b0bd2fe400241bdf2acecc41e229,
     type: 2}
 --- !u!114 &114677648909493964
@@ -302,7 +304,7 @@ SpriteRenderer:
   m_SortingLayerID: 1832973879
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 42805c0d2acdc844ea194fc0cda14034, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4a3e88e9ec87d3e4b9ab8d552f1ab5a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -344,12 +346,12 @@ SpriteRenderer:
   m_SortingLayerID: 1832973879
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 31f04ead2c15ca2479166e8c4d1fa9e8, type: 3}
+  m_Sprite: {fileID: 21300014, guid: 86c65b987eb32f740823725d6ef943f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.33333334, y: 0.33333334}
+  m_Size: {x: 24, y: 24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

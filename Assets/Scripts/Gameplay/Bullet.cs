@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = GameManager.Instance.Config.UPP;
+        _upp = 1.0f/ GameManager.Instance.Config.PPU;
         _bulletSpeed = _bulletSpeed * _upp;
     }
 

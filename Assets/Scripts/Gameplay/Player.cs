@@ -15,9 +15,24 @@ public class Player : MonoBehaviour {
     private float _hitDisplacement = 5.0f;
     private bool _hit = false;
 
+    [SerializeField]
+    private int _maxLife = 10;
+    private int _currentLife = 10;
+
+    public int MaxLife
+    {
+        get { return _maxLife; }
+    }
+    public int CurrentLife
+    {
+        get { return _currentLife; }
+    }
+
     [Space(20)]
     [SerializeField]
     private Aim _aim;
+    [SerializeField]
+    private Slingshot _slingshot;
     [SerializeField]
     private Bullet _bulletPrefab;
     private Pool<Bullet> _bulletPool;
@@ -48,7 +63,7 @@ public class Player : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = GameManager.Instance.Config.UPP;
+        _upp = 1.0f / GameManager.Instance.Config.PPU;
         _playerSpeed = _playerSpeed * _upp;
         _maxXMovement = _maxXMovement * _upp;
         _maxYMovement = _maxYMovement * _upp;
@@ -87,6 +102,11 @@ public class Player : MonoBehaviour {
             _renderer.flipX = false;
         _renderer.sortingOrder = -(int)transform.position.y;
 
+
+        // WEAPON SYSTEM
+        _aim.CustomUpdate();
+        _slingshot.CustomUpdate();
+
         // SHOOTING
         float shoot = 0.0f;
         if (GameManager.Instance.Settings.controller)
@@ -107,7 +127,6 @@ public class Player : MonoBehaviour {
         {
             _canShoot = true;
         }
-
     }
 
     void CreateBullet()

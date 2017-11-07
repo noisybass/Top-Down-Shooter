@@ -28,8 +28,7 @@ public class Aim : MonoBehaviour {
         _cameraMain = Camera.main;
     }
 	
-	// Update is called once per frame
-	void LateUpdate () {
+	public void CustomUpdate () {
         if (GameManager.Instance.Settings.controller)
         {
             ControllerUpdate();
@@ -52,6 +51,10 @@ public class Aim : MonoBehaviour {
         _direction = new Vector2(worldPos.x, worldPos.y).normalized;
 
         transform.position = worldPos;
+
+        Vector3 playerToAim = transform.position - _player.transform.position;
+        float angle = Mathf.Atan2(playerToAim.y, playerToAim.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
     }
 
     /*
@@ -75,6 +78,10 @@ public class Aim : MonoBehaviour {
         worldPos.y = _controllerRadius * input.y + _player.transform.position.y;
 
         transform.position = Vector3.Lerp(transform.position, worldPos, Time.deltaTime * _controllerSpeed);
+
+        Vector3 playerToAim = transform.position - _player.transform.position;
+        float angle = Mathf.Atan2(playerToAim.y, playerToAim.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
     }
 
     void OnDrawGizmos()

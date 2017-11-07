@@ -25,6 +25,19 @@ public class Dog : MonoBehaviour {
     private float _hitDisplacement = 5;
     private bool _hit = false;
 
+    [SerializeField]
+    private int _maxLife = 10;
+    private int _currentLife = 10;
+
+    public int MaxLife
+    {
+        get { return _maxLife; }
+    }
+    public int CurrentLife
+    {
+        get { return _currentLife; }
+    }
+
     private SpriteRenderer _renderer;
 
     [SerializeField]
@@ -43,7 +56,7 @@ public class Dog : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = GameManager.Instance.Config.UPP;
+        _upp = 1.0f / GameManager.Instance.Config.PPU;
         _dogSpeed = _dogSpeed * _upp;
         _idleDistToPlayer = _idleDistToPlayer * _upp;
         _chaseDistToTarget = _chaseDistToTarget * _upp;

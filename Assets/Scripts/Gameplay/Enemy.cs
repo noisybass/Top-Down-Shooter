@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = GameManager.Instance.Config.UPP;
+        _upp = 1.0f / GameManager.Instance.Config.PPU;
         _enemySpeed = _enemySpeed * _upp;
         _hitDisplacement = _hitDisplacement * _upp;
     }

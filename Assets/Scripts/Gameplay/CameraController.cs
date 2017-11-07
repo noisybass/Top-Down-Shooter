@@ -25,12 +25,9 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float _shakeSeconds = 1.0f;
 
-
     void Awake()
     {
-        int height = Screen.height;
-        int size = 24;
-        GetComponent<Camera>().orthographicSize = height / (2 * size);
+        GetComponent<Camera>().orthographicSize = Screen.height * 0.5f / (GameManager.Instance.Config.PPU * GameManager.Instance.Config.pixelScale);
     }
 
 	void Start () {
