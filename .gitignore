@@ -24,6 +24,7 @@ ExportedObj/
 *.pidb
 *.booproj
 *.svd
+*.vs
  
 # Builds
 *.apk
