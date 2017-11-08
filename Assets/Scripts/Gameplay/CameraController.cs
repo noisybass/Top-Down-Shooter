@@ -25,10 +25,7 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float _shakeSeconds = 1.0f;
 
-    void Awake()
-    {
-        GetComponent<Camera>().orthographicSize = Screen.height * 0.5f / (GameManager.Instance.Config.PPU * GameManager.Instance.Config.pixelScale);
-    }
+    
 
 	void Start () {
         _distanceToPlayer = transform.position - _player.transform.position;

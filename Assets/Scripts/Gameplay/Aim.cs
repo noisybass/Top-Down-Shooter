@@ -15,7 +15,8 @@ public class Aim : MonoBehaviour {
     [SerializeField]
     private GameObject _player;
 
-    private Camera _cameraMain;
+    [SerializeField]
+    private Camera _camera;
 
     private Vector2 _direction = new Vector2(1, 0);
     public Vector2 Direction
@@ -25,7 +26,7 @@ public class Aim : MonoBehaviour {
 
 	void Awake()
     {
-        _cameraMain = Camera.main;
+        _camera = Camera.main;
     }
 	
 	public void CustomUpdate () {
@@ -42,11 +43,11 @@ public class Aim : MonoBehaviour {
     void MouseUpdate()
     {
         Vector2 mousePos = Input.mousePosition;
-        mousePos.x = Mathf.Clamp(mousePos.x, 0, _cameraMain.pixelWidth);
-        mousePos.y = Mathf.Clamp(mousePos.y, 0, _cameraMain.pixelHeight);
+        mousePos.x = Mathf.Clamp(mousePos.x, 0, _camera.pixelWidth);
+        mousePos.y = Mathf.Clamp(mousePos.y, 0, _camera.pixelHeight);
 
         Vector3 worldPos = Vector3.zero;
-        worldPos = _cameraMain.ScreenToWorldPoint(mousePos);
+        worldPos = _camera.ScreenToWorldPoint(mousePos);
         worldPos.z = 0.0f;
         _direction = new Vector2(worldPos.x, worldPos.y).normalized;
 

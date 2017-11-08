@@ -39,6 +39,8 @@ public class Dog : MonoBehaviour {
     }
 
     private SpriteRenderer _renderer;
+    private Animator _anim;
+    int _dogSpeedHash = Animator.StringToHash("dogSpeed");
 
     [SerializeField]
     private Transform _player;
@@ -47,6 +49,7 @@ public class Dog : MonoBehaviour {
 	void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
         _state = DogState.IDLE;
     }
 
@@ -108,6 +111,7 @@ public class Dog : MonoBehaviour {
 
     private void Idle()
     {
+        _anim.SetFloat(_dogSpeedHash, 0.0f);
     }
 
     private void Follow()
@@ -115,6 +119,8 @@ public class Dog : MonoBehaviour {
         Vector2 direction = (_player.position - transform.position).normalized;
         Vector3 movement = direction * _dogSpeed * Time.deltaTime;
         transform.position += movement;
+
+        _anim.SetFloat(_dogSpeedHash, movement.sqrMagnitude);
 
         if (direction.x > 0)
             _renderer.flipX = false;
