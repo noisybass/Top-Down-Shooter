@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: dc7330a95a0264a438f26ee4d6b54b98
   - enabled: 1
-    path: Assets/Scenes/SettingsMenu.unity
+    path: Assets/Scenes/SettingsMenuFromPause.unity
     guid: 3f4661e9dbe87534583659e830607417
   - enabled: 1
     path: Assets/Scenes/PauseMenu.unity
@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOverMenu.unity
     guid: 91da52bb25692af4d8577331d19cf64a
+  - enabled: 1
+    path: Assets/Scenes/SettingsMenuFromStart.unity
+    guid: 4fa29dd5fc8b2ca408480dd306ca914b

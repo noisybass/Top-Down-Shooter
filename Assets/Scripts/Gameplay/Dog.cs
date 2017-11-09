@@ -67,46 +67,49 @@ public class Dog : MonoBehaviour {
 
     void Update()
     {
-        switch(_state)
+        if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
         {
-            case DogState.IDLE:
-                if (StartChasingEnemy())
-                    _state = DogState.CHASE;
-                else 
-                {
-                    if (!IsNearPlayer())
-                        _state = DogState.FOLLOW;
+            switch (_state)
+            {
+                case DogState.IDLE:
+                    if (StartChasingEnemy())
+                        _state = DogState.CHASE;
                     else
-                        Idle();
-                }
-                break;
-            case DogState.FOLLOW:
-                if (StartChasingEnemy())
-                    _state = DogState.CHASE;
-                else 
-                {
-                    if (IsNearPlayer())
+                    {
+                        if (!IsNearPlayer())
+                            _state = DogState.FOLLOW;
+                        else
+                            Idle();
+                    }
+                    break;
+                case DogState.FOLLOW:
+                    if (StartChasingEnemy())
+                        _state = DogState.CHASE;
+                    else
+                    {
+                        if (IsNearPlayer())
+                            _state = DogState.IDLE;
+                        else
+                            Follow();
+                    }
+                    break;
+                case DogState.CHASE:
+                    if (IsNearTarget())
+                    {
+                        Chase();
+                    }
+                    else
+                    {
                         _state = DogState.IDLE;
-                    else
-                        Follow();
-                }
-                break;
-            case DogState.CHASE:
-                if (IsNearTarget())
-                {
-                    Chase();
-                }
-                else
-                {
-                    _state = DogState.IDLE;
-                }
-                    
-                break;
-            case DogState.ATTACK:
-                Attack();
-                break;
+                    }
+
+                    break;
+                case DogState.ATTACK:
+                    Attack();
+                    break;
+            }
+            _renderer.sortingOrder = -(int)transform.position.y;
         }
-        _renderer.sortingOrder = -(int)transform.position.y;
     }
 
     private void Idle()

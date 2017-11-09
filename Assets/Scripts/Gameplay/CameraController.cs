@@ -36,31 +36,35 @@ public class CameraController : MonoBehaviour {
         EventManager.Instance.AddHandler(EventManager.EventType.SHOOT, ShootEventHandler);
 	}
 	
-	void LateUpdate () {
-        _offset = (_aim.transform.position - _player.transform.position) * 0.5f;
-        if (Mathf.Abs(_offset.x) > _maxOffsetX)
+	void LateUpdate ()
+    {
+        if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
         {
-            float p = _offset.x / _offset.y;
-            _offset.x = Mathf.Clamp(_offset.x, -_maxOffsetX, _maxOffsetX);
-            _offset.y = _offset.x / p;
-        }
-        if (Mathf.Abs(_offset.y) > _maxOffsetY)
-        {
-            float p = _offset.y / _offset.x;
-            _offset.y = Mathf.Clamp(_offset.y, -_maxOffsetY, _maxOffsetY);
-            _offset.x = _offset.y / p;
-        }
-        transform.localPosition = _player.transform.position + _offset + _distanceToPlayer;
+            _offset = (_aim.transform.position - _player.transform.position) * 0.5f;
+            if (Mathf.Abs(_offset.x) > _maxOffsetX)
+            {
+                float p = _offset.x / _offset.y;
+                _offset.x = Mathf.Clamp(_offset.x, -_maxOffsetX, _maxOffsetX);
+                _offset.y = _offset.x / p;
+            }
+            if (Mathf.Abs(_offset.y) > _maxOffsetY)
+            {
+                float p = _offset.y / _offset.x;
+                _offset.y = Mathf.Clamp(_offset.y, -_maxOffsetY, _maxOffsetY);
+                _offset.x = _offset.y / p;
+            }
+            transform.localPosition = _player.transform.position + _offset + _distanceToPlayer;
 
-        if (_shake > 0.0f)
-        {
-            Vector3 displ = Random.insideUnitCircle * _shakeAmount;
-            displ.z = transform.localPosition.z;
-            transform.localPosition += displ;
-            _shake -= Time.deltaTime;
+            if (_shake > 0.0f)
+            {
+                Vector3 displ = Random.insideUnitCircle * _shakeAmount;
+                displ.z = transform.localPosition.z;
+                transform.localPosition += displ;
+                _shake -= Time.deltaTime;
+            }
+            else
+                _shake = 0.0f;
         }
-        else
-            _shake = 0.0f;
     }
 
     public void ShootEventHandler(object sender, BaseEvent e)

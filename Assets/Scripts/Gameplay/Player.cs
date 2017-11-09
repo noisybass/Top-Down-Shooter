@@ -72,60 +72,63 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // MOVEMENT
-        float axis_h = Input.GetAxisRaw("Horizontal");
-        float axis_v = Input.GetAxisRaw("Vertical");
-
-        Vector3 movement = Vector3.zero;
-        float deltaSpeed = _playerSpeed * Time.deltaTime;
-
-        if (axis_h < 0)
-            movement.x -= deltaSpeed;
-        if (axis_h > 0)
-            movement.x += deltaSpeed;
-        if (axis_v < 0)
-            movement.y -= deltaSpeed;
-        if (axis_v > 0)
-            movement.y += deltaSpeed;
-
-        _anim.SetFloat(_playerSpeedHash, movement.sqrMagnitude);
-
-        Vector3 newPos = transform.position;
-        newPos += movement;
-        newPos.x = Mathf.Clamp(newPos.x, -_maxXMovement, _maxXMovement);
-        newPos.y = Mathf.Clamp(newPos.y, -_maxYMovement, _maxYMovement);
-        transform.position = newPos;
-
-        if (_aim.transform.position.x < transform.position.x)
-            _renderer.flipX = true;
-        else
-            _renderer.flipX = false;
-        _renderer.sortingOrder = -(int)transform.position.y;
-
-
-        // WEAPON SYSTEM
-        _aim.CustomUpdate();
-        _slingshot.CustomUpdate();
-
-        // SHOOTING
-        float shoot = 0.0f;
-        if (GameManager.Instance.Settings.controller)
-            shoot = Input.GetAxisRaw("Shoot");
-        else
-            shoot = Input.GetMouseButtonDown(0) ? 1.0f : 0.0f;
-
-        if (shoot != 0.0f)
+        if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
         {
-            if (_canShoot)
+            // MOVEMENT
+            float axis_h = Input.GetAxisRaw("Horizontal");
+            float axis_v = Input.GetAxisRaw("Vertical");
+
+            Vector3 movement = Vector3.zero;
+            float deltaSpeed = _playerSpeed * Time.deltaTime;
+
+            if (axis_h < 0)
+                movement.x -= deltaSpeed;
+            if (axis_h > 0)
+                movement.x += deltaSpeed;
+            if (axis_v < 0)
+                movement.y -= deltaSpeed;
+            if (axis_v > 0)
+                movement.y += deltaSpeed;
+
+            _anim.SetFloat(_playerSpeedHash, movement.sqrMagnitude);
+
+            Vector3 newPos = transform.position;
+            newPos += movement;
+            newPos.x = Mathf.Clamp(newPos.x, -_maxXMovement, _maxXMovement);
+            newPos.y = Mathf.Clamp(newPos.y, -_maxYMovement, _maxYMovement);
+            transform.position = newPos;
+
+            if (_aim.transform.position.x < transform.position.x)
+                _renderer.flipX = true;
+            else
+                _renderer.flipX = false;
+            _renderer.sortingOrder = -(int)transform.position.y;
+
+
+            // WEAPON SYSTEM
+            _aim.CustomUpdate();
+            _slingshot.CustomUpdate();
+
+            // SHOOTING
+            float shoot = 0.0f;
+            if (GameManager.Instance.Settings.controller)
+                shoot = Input.GetAxisRaw("Shoot");
+            else
+                shoot = Input.GetMouseButtonDown(0) ? 1.0f : 0.0f;
+
+            if (shoot != 0.0f)
             {
-                _canShoot = false;
-                CreateBullet();
-                EventManager.Instance.OnEvent(this, _shootEvent);
+                if (_canShoot)
+                {
+                    _canShoot = false;
+                    CreateBullet();
+                    EventManager.Instance.OnEvent(this, _shootEvent);
+                }
             }
-        }
-        else
-        {
-            _canShoot = true;
+            else
+            {
+                _canShoot = true;
+            }
         }
     }
 

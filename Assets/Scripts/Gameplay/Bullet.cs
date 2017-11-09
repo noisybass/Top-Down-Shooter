@@ -37,13 +37,17 @@ public class Bullet : MonoBehaviour {
         gameObject.SetActive(true);
     }
 
-	void Update () {
-        Vector3 movement = _direction * _bulletSpeed * Time.deltaTime;
-        transform.position += movement;
+	void Update ()
+    {
+        if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
+        {
+            Vector3 movement = _direction * _bulletSpeed * Time.deltaTime;
+            transform.position += movement;
 
-        _currentTime += Time.deltaTime;
-        if (_currentTime >= _timeToLife)
-            Die();
+            _currentTime += Time.deltaTime;
+            if (_currentTime >= _timeToLife)
+                Die();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D col)

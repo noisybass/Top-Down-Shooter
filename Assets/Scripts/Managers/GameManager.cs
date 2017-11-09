@@ -116,7 +116,11 @@ public class GameManager : Singleton<GameManager> {
     public void BackToStartMenu()
     {
         if (_state == GameState.PAUSE_MENU)
+        {
             SceneManager.UnloadSceneAsync("PauseMenu");
+            SceneManager.UnloadSceneAsync("Gameplay");
+            Time.timeScale = 1;
+        }
         else
         {
             SceneManager.UnloadSceneAsync("GameOverMenu");
@@ -131,10 +135,15 @@ public class GameManager : Singleton<GameManager> {
     public void OpenSettings()
     {
         if (_state == GameState.START_MENU)
+        {
             SceneManager.UnloadSceneAsync("StartMenu");
+            SceneManager.LoadScene("SettingsMenuFromStart", LoadSceneMode.Additive);
+        }  
         else
+        {
             SceneManager.UnloadSceneAsync("PauseMenu");
-        SceneManager.LoadScene("SettingsMenu", LoadSceneMode.Additive);
+            SceneManager.LoadScene("SettingsMenuFromPause", LoadSceneMode.Additive);
+        }
         _previousState = _state;
         _state = GameState.SETTINGS_MENU;
     }
@@ -142,15 +151,16 @@ public class GameManager : Singleton<GameManager> {
     // From SETTINGS menu
     public void CloseSettings()
     {
-        SceneManager.UnloadSceneAsync("SettingsMenu");
         if (_previousState == GameState.START_MENU)
         {
+            SceneManager.UnloadSceneAsync("SettingsMenuFromStart");
             SceneManager.LoadScene("StartMenu", LoadSceneMode.Additive);
             _previousState = _state;
             _state = GameState.START_MENU;
         }
         else
         {
+            SceneManager.UnloadSceneAsync("SettingsMenuFromPause");
             SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
             _previousState = _state;
             _state = GameState.PAUSE_MENU;

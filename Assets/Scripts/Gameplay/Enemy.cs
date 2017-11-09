@@ -50,14 +50,18 @@ public class Enemy : MonoBehaviour {
         _hitDisplacement = _hitDisplacement * _upp;
     }
 	
-	void Update () {
-        if (_target != null)
+	void Update ()
+    {
+        if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
         {
-            Vector2 direction = (_target.position - transform.position).normalized;
-            Vector3 movement = direction * _enemySpeed * Time.deltaTime;
-            transform.position += movement;
+            if (_target != null)
+            {
+                Vector2 direction = (_target.position - transform.position).normalized;
+                Vector3 movement = direction * _enemySpeed * Time.deltaTime;
+                transform.position += movement;
 
-            _renderer.sortingOrder = -(int)transform.position.y;
+                _renderer.sortingOrder = -(int)transform.position.y;
+            }
         }
 	}
 
