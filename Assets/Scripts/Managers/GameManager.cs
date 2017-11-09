@@ -165,6 +165,15 @@ public class GameManager : Singleton<GameManager> {
             _previousState = _state;
             _state = GameState.PAUSE_MENU;
         }
+    }
+
+    public void ControllerSettingsChange(bool value)
+    {
+        _settings.controller = value;
+    }
+
+    public void VolumeSettingsChange(float value)
+    {
 
     }
 }
