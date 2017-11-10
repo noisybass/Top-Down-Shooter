@@ -6,7 +6,16 @@ public class Enemy : MonoBehaviour {
 
     private float _upp;
     [SerializeField]
-    private float _enemySpeed = 100;
+    private float _enemySpeed = 100.0f;
+    [SerializeField]
+    private bool _randomMovement = false;
+    [SerializeField]
+    private float _maxRandomSpeed = 50.0f;
+    private float _randomSpeed = 0.0f;
+    private Vector3 _randomDirection = Vector3.zero;
+    [SerializeField]
+    private float _randomTime = 2.0f;
+    private float _currentTime = 0.0f;
 
     [SerializeField]
     private float _enemyLife = 2.0f;
@@ -58,7 +67,25 @@ public class Enemy : MonoBehaviour {
             {
                 Vector2 direction = (_target.position - transform.position).normalized;
                 Vector3 movement = direction * _enemySpeed * Time.deltaTime;
+
+                // Random movement
+                _currentTime += Time.deltaTime;
+                if (_randomMovement)
+                {
+                    if (_currentTime >= _randomTime)
+                    {
+                        _randomDirection = Random.insideUnitCircle.normalized;
+                        _randomSpeed = Random.Range(0.0f, _maxRandomSpeed);
+                        _currentTime = 0.0f;
+                    }
+                    movement += _randomDirection * _randomSpeed * Time.deltaTime;
+                }
                 transform.position += movement;
+
+                if (direction.x > 0)
+                    _renderer.flipX = false;
+                else
+                    _renderer.flipX = true;
 
                 _renderer.sortingOrder = -(int)transform.position.y;
             }
