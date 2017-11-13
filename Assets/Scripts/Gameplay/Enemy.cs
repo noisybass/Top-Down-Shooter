@@ -32,10 +32,13 @@ public class Enemy : MonoBehaviour {
     }
 
     private SpriteRenderer _renderer;
+    private Animator _anim;
+    int _enemyHitHash = Animator.StringToHash("enemyHit");
 
     void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
     }
 
     void Start()
@@ -107,8 +110,14 @@ public class Enemy : MonoBehaviour {
     IEnumerator Hit(Vector3 direction, string colType)
     {
         float displacement = 0.0f;
+        Debug.Log("HIT");
 
+        if (colType != "Enemy")
+        {
+            _anim.SetTrigger(_enemyHitHash);
+        }
         _hit = true;
+
         while(displacement < _hitDisplacement)
         {
             Vector3 movement = direction * (_enemySpeed * 5) * Time.deltaTime;

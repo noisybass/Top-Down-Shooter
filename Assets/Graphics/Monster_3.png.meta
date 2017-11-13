@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9b6f2eab9b905094a963aadb99c78816
-timeCreated: 1510584291
+timeCreated: 1510589489
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,8 @@ TextureImporter:
     21300006: Monster_3_3
     21300008: Monster_3_4
     21300010: Monster_3_5
+    21300012: Monster_3_6
+    21300014: Monster_3_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -101,9 +103,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 18
+        y: 24
         width: 32
-        height: 18
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,9 +117,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 18
+        y: 24
         width: 32
-        height: 18
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,9 +131,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 18
+        y: 24
         width: 32
-        height: 18
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,9 +145,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 18
+        y: 24
         width: 32
-        height: 18
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,7 +161,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 32
-        height: 18
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,7 +175,35 @@ TextureImporter:
         x: 32
         y: 0
         width: 32
-        height: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Monster_3_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Monster_3_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
