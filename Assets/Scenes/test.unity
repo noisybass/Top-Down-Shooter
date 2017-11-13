@@ -223,7 +223,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &539614116
 MonoBehaviour:
@@ -409,7 +409,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4561715990909524, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1976319991512028, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
       propertyPath: m_IsActive
@@ -470,6 +470,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1114361991306024, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519214999747382, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
+      propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -825,7 +829,7 @@ RectTransform:
   - {fileID: 1174096984}
   - {fileID: 1737349367}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1387,7 +1391,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1950202974
 Prefab:
@@ -1426,7 +1430,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4275269364711180, guid: 623dfb2f01e87144c9e2fac554bca65a, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114651286569959374, guid: 623dfb2f01e87144c9e2fac554bca65a,
         type: 2}
@@ -1464,7 +1468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1965183760
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1518,7 +1522,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1965183762
 MonoBehaviour:
@@ -1651,5 +1655,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

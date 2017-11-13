@@ -14,7 +14,7 @@ public class Slingshot : MonoBehaviour {
         _renderer = gameObject.GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void CustomUpdate () {
+    public void CustomUpdate (int sortingOrder) {
         Vector2 slingshotToAim = _aim.transform.position - transform.position;
         float angle = Mathf.Atan2(slingshotToAim.y, slingshotToAim.x) * Mathf.Rad2Deg;        
 
@@ -31,6 +31,6 @@ public class Slingshot : MonoBehaviour {
         transform.localScale = newScale;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
 
-        _renderer.sortingOrder = -(int)transform.position.y + 1;
+        _renderer.sortingOrder = sortingOrder;
     }
 }

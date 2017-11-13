@@ -119,7 +119,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemySpeed: 20
   _randomMovement: 1
-  _maxRandomSpeed: 30
+  _maxRandomSpeed: 10
+  _randomTime: 2
   _enemyLife: 2
   _hitDisplacement: 10
 --- !u!212 &212046416054818518

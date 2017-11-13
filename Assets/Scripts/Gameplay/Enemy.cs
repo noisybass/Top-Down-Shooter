@@ -87,10 +87,12 @@ public class Enemy : MonoBehaviour {
                 else
                     _renderer.flipX = true;
 
-                _renderer.sortingOrder = -(int)transform.position.y;
+                _renderer.sortingOrder = (int)(-transform.position.y + _renderer.bounds.extents.y);
             }
+            _renderer.sortingOrder = (int)(-transform.position.y + _renderer.bounds.extents.y);
+
         }
-	}
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {

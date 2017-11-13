@@ -108,7 +108,7 @@ public class Dog : MonoBehaviour {
                     Attack();
                     break;
             }
-            _renderer.sortingOrder = -(int)transform.position.y;
+            _renderer.sortingOrder = (int)(-transform.position.y + _renderer.bounds.extents.y);
         }
     }
 

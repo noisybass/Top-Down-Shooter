@@ -102,12 +102,12 @@ public class Player : MonoBehaviour {
                 _renderer.flipX = true;
             else
                 _renderer.flipX = false;
-            _renderer.sortingOrder = -(int)transform.position.y;
+            _renderer.sortingOrder = (int)(-transform.position.y + _renderer.bounds.extents.y);
 
 
             // WEAPON SYSTEM
             _aim.CustomUpdate();
-            _slingshot.CustomUpdate();
+            _slingshot.CustomUpdate(_renderer.sortingOrder + 1);
 
             // SHOOTING
             float shoot = 0.0f;
