@@ -96,13 +96,15 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (!_hit && (col.gameObject.tag == "Bullet" || col.gameObject.tag == "Dog"))
+        if (!_hit && (col.gameObject.tag == "Bullet" || 
+                      col.gameObject.tag == "Dog" || 
+                      col.gameObject.tag == "Enemy"))
         {
-            StartCoroutine(Hit(col.contacts[0].normal, col.gameObject.tag == "Dog"));
+            StartCoroutine(Hit(col.contacts[0].normal, col.gameObject.tag));
         }
     }
 
-    IEnumerator Hit(Vector3 direction, bool isDog)
+    IEnumerator Hit(Vector3 direction, string colType)
     {
         float displacement = 0.0f;
 
@@ -114,11 +116,13 @@ public class Enemy : MonoBehaviour {
             displacement += movement.magnitude;
             yield return null;
         }
-        _currentLife--;
-        if (isDog || _currentLife == 0)
-            Die();
-        else
-            _hit = false;
+        if (colType != "Enemy")
+        {
+            _currentLife--;
+            if (colType == "Dog" || _currentLife == 0)
+                Die();
+        }
+        _hit = false;
 
     }
 
