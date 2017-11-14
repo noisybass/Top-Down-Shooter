@@ -121,7 +121,7 @@ MonoBehaviour:
   _randomMovement: 0
   _maxRandomSpeed: 50
   _randomTime: 2
-  _enemyLife: 10
+  _enemyLife: 2
   _hitDisplacement: 15
 --- !u!212 &212733981609939636
 SpriteRenderer:

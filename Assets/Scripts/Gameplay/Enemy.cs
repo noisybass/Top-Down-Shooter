@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-    private float _upp;
     [SerializeField]
     private float _enemySpeed = 100.0f;
     [SerializeField]
@@ -18,22 +17,19 @@ public class Enemy : MonoBehaviour {
     private float _currentTime = 0.0f;
 
     [SerializeField]
-    private float _enemyLife = 2.0f;
-    private float _currentLife;
+    private int _enemyLife = 2;
+    private int _currentLife;
 
     [SerializeField]
     private float _hitDisplacement = 5;
     private bool _hit = false;
 
     private Transform _target;
-    public Transform Target
-    {
-        set { _target = value; }
-    }
 
     private SpriteRenderer _renderer;
     private Animator _anim;
     int _enemyHitHash = Animator.StringToHash("enemyHit");
+    int _enemyLifeHash = Animator.StringToHash("enemyLife");
 
     void Awake()
     {
@@ -57,16 +53,16 @@ public class Enemy : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = 1.0f / GameManager.Instance.Config.PPU;
-        _enemySpeed = _enemySpeed * _upp;
-        _hitDisplacement = _hitDisplacement * _upp;
+        float upp = 1.0f / GameManager.Instance.Config.PPU;
+        _enemySpeed = _enemySpeed * upp;
+        _hitDisplacement = _hitDisplacement * upp;
     }
 	
 	void Update ()
     {
         if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
         {
-            if (_target != null)
+            if (_target != null && _currentLife > 0)
             {
                 Vector2 direction = (_target.position - transform.position).normalized;
                 Vector3 movement = direction * _enemySpeed * Time.deltaTime;
@@ -110,13 +106,20 @@ public class Enemy : MonoBehaviour {
     IEnumerator Hit(Vector3 direction, string colType)
     {
         float displacement = 0.0f;
+        _hit = true;
         Debug.Log("HIT");
 
         if (colType != "Enemy")
         {
+            if(colType == "Dog")
+                _currentLife = 0;
+            else
+                _currentLife--;
+
+            Debug.Log(_currentLife);
+            _anim.SetInteger(_enemyLifeHash, _currentLife);
             _anim.SetTrigger(_enemyHitHash);
         }
-        _hit = true;
 
         while(displacement < _hitDisplacement)
         {
@@ -125,18 +128,19 @@ public class Enemy : MonoBehaviour {
             displacement += movement.magnitude;
             yield return null;
         }
-        if (colType != "Enemy")
+        if (_currentLife == 0)
         {
-            _currentLife--;
-            if (colType == "Dog" || _currentLife == 0)
-                Die();
+            yield return new WaitForSeconds(1.0f);
+            Die();
         }
-        _hit = false;
+        else
+            _hit = false;
 
     }
 
     void Die()
     {
+        Debug.Log("Death");
         GetComponentInParent<EnemySpawner>().DestroyEnemy(this);
     }
 }
