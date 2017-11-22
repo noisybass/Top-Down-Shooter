@@ -25,18 +25,19 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private float _shakeSeconds = 1.0f;
 
-    
 
-	void Start () {
+
+    void Start()
+    {
         _distanceToPlayer = transform.position - _player.transform.position;
         Vector2 maxOffset = Camera.main.ScreenToWorldPoint(Camera.main.pixelRect.max);
         _maxOffsetX = maxOffset.x * _maxOffsetXFactor;
         _maxOffsetY = maxOffset.y * _maxOffsetYFactor;
 
         EventManager.Instance.AddHandler(EventManager.EventType.SHOOT, ShootEventHandler);
-	}
-	
-	void LateUpdate ()
+    }
+
+    void LateUpdate()
     {
         if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
         {

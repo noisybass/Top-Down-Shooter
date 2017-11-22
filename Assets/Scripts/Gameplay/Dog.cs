@@ -179,7 +179,7 @@ public class Dog : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (_state == DogState.CHASE && col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy")
         {
             if (_state == DogState.CHASE && _targetEnemy == col.gameObject)
             {
@@ -198,6 +198,9 @@ public class Dog : MonoBehaviour {
         float displacement = 0.0f;
 
         _hit = true;
+
+        _currentLife--;
+
         while (displacement < _hitDisplacement)
         {
             Vector3 movement = direction * (_dogSpeed * 5) * Time.deltaTime;
@@ -205,7 +208,14 @@ public class Dog : MonoBehaviour {
             displacement += movement.magnitude;
             yield return null;
         }
-        _hit = false;
 
+        if (_currentLife == 0)
+        {
+            GameManager.Instance.GameOver();
+        }
+        else
+        {
+            _hit = false;
+        }
     }
 }

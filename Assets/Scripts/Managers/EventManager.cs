@@ -42,10 +42,13 @@ public class EventManager : Singleton<EventManager> {
 
     public void OnEvent(object sender, BaseEvent e)
     {
-        List<EventHandler> handlers = _eventHandlers[e.type];
-        for (int i = 0; i < handlers.Count; i++)
+        if (_eventHandlers.ContainsKey(e.type))
         {
-            handlers[i](sender, e);
+            List<EventHandler> handlers = _eventHandlers[e.type];
+            for (int i = 0; i < handlers.Count; i++)
+            {
+                handlers[i](sender, e);
+            }
         }
     }
 }

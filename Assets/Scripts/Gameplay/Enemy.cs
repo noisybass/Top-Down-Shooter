@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private float _maxRandomSpeed = 50.0f;
     private float _randomSpeed = 0.0f;
-    private Vector3 _randomDirection = Vector3.zero;
+    private Vector2 _randomDirection = Vector3.zero;
     [SerializeField]
     private float _randomTime = 2.0f;
     private float _currentTime = 0.0f;
@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour {
 
     private Transform _target;
 
+    private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
     private Animator _anim;
     int _enemyHitHash = Animator.StringToHash("enemyHit");
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour {
 
     void Awake()
     {
+        _rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
     }
@@ -44,7 +46,7 @@ public class Enemy : MonoBehaviour {
 
     public void Init(Vector3 pos, Transform target)
     {
-        transform.position = pos;
+        _rb.MovePosition(pos);
         _currentLife = _enemyLife;
         _target = target;
         _hit = false;
@@ -58,28 +60,28 @@ public class Enemy : MonoBehaviour {
         _hitDisplacement = _hitDisplacement * upp;
     }
 	
-	void Update ()
+	void FixedUpdate ()
     {
         if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
         {
-            if (_target != null && _currentLife > 0)
+            if (_target != null && !_hit)
             {
                 Vector2 direction = (_target.position - transform.position).normalized;
-                Vector3 movement = direction * _enemySpeed * Time.deltaTime;
+                Vector2 movement = direction * _enemySpeed * Time.deltaTime;
 
                 // Random movement
-                _currentTime += Time.deltaTime;
-                if (_randomMovement)
-                {
-                    if (_currentTime >= _randomTime)
-                    {
-                        _randomDirection = Random.insideUnitCircle.normalized;
-                        _randomSpeed = Random.Range(0.0f, _maxRandomSpeed);
-                        _currentTime = 0.0f;
-                    }
-                    movement += _randomDirection * _randomSpeed * Time.deltaTime;
-                }
-                transform.position += movement;
+                //_currentTime += Time.deltaTime;
+                //if (_randomMovement)
+                //{
+                //    if (_currentTime >= _randomTime)
+                //    {
+                //        _randomDirection = Random.insideUnitCircle.normalized;
+                //        _randomSpeed = Random.Range(0.0f, _maxRandomSpeed);
+                //        _currentTime = 0.0f;
+                //    }
+                //    movement += _randomDirection * _randomSpeed * Time.deltaTime;
+                //}
+                _rb.MovePosition(_rb.position + movement);
 
                 if (direction.x > 0)
                     _renderer.flipX = false;
@@ -88,8 +90,6 @@ public class Enemy : MonoBehaviour {
 
                 _renderer.sortingOrder = (int)(-transform.position.y + _renderer.bounds.extents.y);
             }
-            _renderer.sortingOrder = (int)(-transform.position.y + _renderer.bounds.extents.y);
-
         }
     }
 
@@ -97,7 +97,8 @@ public class Enemy : MonoBehaviour {
     {
         if (!_hit && (col.gameObject.tag == "Bullet" || 
                       col.gameObject.tag == "Dog" || 
-                      col.gameObject.tag == "Enemy"))
+                      col.gameObject.tag == "Enemy") ||
+                      col.gameObject.tag == "Block")
         {
             StartCoroutine(Hit(col.contacts[0].normal, col.gameObject.tag));
         }
@@ -107,24 +108,25 @@ public class Enemy : MonoBehaviour {
     {
         float displacement = 0.0f;
         _hit = true;
-        Debug.Log("HIT");
 
-        if (colType != "Enemy")
+        if (colType == "Bullet" || colType == "Dog")
         {
             if(colType == "Dog")
                 _currentLife = 0;
             else
                 _currentLife--;
 
-            Debug.Log(_currentLife);
+            if (_currentLife == 0)
+                GameManager.Instance.AddScore();
+
             _anim.SetInteger(_enemyLifeHash, _currentLife);
             _anim.SetTrigger(_enemyHitHash);
         }
 
         while(displacement < _hitDisplacement)
         {
-            Vector3 movement = direction * (_enemySpeed * 5) * Time.deltaTime;
-            transform.position += movement;
+            Vector2 movement = direction * (_enemySpeed * 5) * Time.deltaTime;
+            _rb.MovePosition(_rb.position + movement);
             displacement += movement.magnitude;
             yield return null;
         }
@@ -140,7 +142,6 @@ public class Enemy : MonoBehaviour {
 
     void Die()
     {
-        Debug.Log("Death");
-        GetComponentInParent<EnemySpawner>().DestroyEnemy(this);
+        GetComponentInParent<PointSpawner>().DestroyEnemy(this);
     }
 }

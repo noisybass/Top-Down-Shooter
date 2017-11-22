@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Bullet
   - Dog
+  - Block
+  - EventSystem
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Player
   - Enemy
   - Dog
-  - 
+  - Bullets
   - 
   - 
   - 
@@ -47,11 +49,17 @@ TagManager:
   - name: Floor
     uniqueID: 3571288739
     locked: 0
+  - name: PropsBack
+    uniqueID: 396558671
+    locked: 0
   - name: Items
     uniqueID: 3521372705
     locked: 0
   - name: Characters
     uniqueID: 1832973879
+    locked: 0
+  - name: PropsFront
+    uniqueID: 3916499605
     locked: 0
   - name: Aim
     uniqueID: 3590440885

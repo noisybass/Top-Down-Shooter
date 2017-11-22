@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    private float _upp;
     [SerializeField]
     private float _playerSpeed = 150;
-    [SerializeField]
-    private float _maxXMovement = 100;
-    [SerializeField]
-    private float _maxYMovement = 50;
     [SerializeField]
     private float _hitDisplacement = 5.0f;
     private bool _hit = false;
@@ -38,6 +33,7 @@ public class Player : MonoBehaviour {
     private Pool<Bullet> _bulletPool;
     private bool _canShoot = true;
 
+    private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
     private Animator _anim;
     int _playerSpeedHash = Animator.StringToHash("playerSpeed");
@@ -49,6 +45,7 @@ public class Player : MonoBehaviour {
 
 	void Awake()
     {
+        _rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
         _shootEvent = new ShootEvent();
@@ -63,22 +60,20 @@ public class Player : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = 1.0f / GameManager.Instance.Config.PPU;
-        _playerSpeed = _playerSpeed * _upp;
-        _maxXMovement = _maxXMovement * _upp;
-        _maxYMovement = _maxYMovement * _upp;
-        _hitDisplacement = _hitDisplacement * _upp;
+        float upp = 1.0f / GameManager.Instance.Config.PPU;
+        _playerSpeed = _playerSpeed * upp;
+        _hitDisplacement = _hitDisplacement * upp;
     }
 	
 	// Update is called once per frame
-	void Update () {
-        if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY)
+	void FixedUpdate () {
+        if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY && !_hit)
         {
             // MOVEMENT
             float axis_h = Input.GetAxisRaw("Horizontal");
             float axis_v = Input.GetAxisRaw("Vertical");
 
-            Vector3 movement = Vector3.zero;
+            Vector2 movement = Vector2.zero;
             float deltaSpeed = _playerSpeed * Time.deltaTime;
 
             if (axis_h < 0)
@@ -92,11 +87,7 @@ public class Player : MonoBehaviour {
 
             _anim.SetFloat(_playerSpeedHash, movement.sqrMagnitude);
 
-            Vector3 newPos = transform.position;
-            newPos += movement;
-            newPos.x = Mathf.Clamp(newPos.x, -_maxXMovement, _maxXMovement);
-            newPos.y = Mathf.Clamp(newPos.y, -_maxYMovement, _maxYMovement);
-            transform.position = newPos;
+            _rb.MovePosition(_rb.position + movement);
 
             if (_aim.transform.position.x < transform.position.x)
                 _renderer.flipX = true;
@@ -135,7 +126,8 @@ public class Player : MonoBehaviour {
     void CreateBullet()
     {
         Bullet bullet = _bulletPool.CreateObject();
-        bullet.Init(transform.position, (_aim.transform.position - transform.position).normalized);
+        Vector3 direction = (_aim.transform.position - transform.position).normalized;
+        bullet.Init(transform.position + 2 * direction, direction);
     }
 
     public void DestroyBullet(Bullet bullet)
@@ -148,24 +140,33 @@ public class Player : MonoBehaviour {
         if (!_hit && col.gameObject.tag == "Enemy")
         {
             StartCoroutine(Hit(col.contacts[0].normal));
-        }  
+        }
     }
 
-    IEnumerator Hit(Vector3 direction)
+    IEnumerator Hit(Vector2 direction)
     {
         float displacement = 0.0f;
 
         _anim.SetTrigger(_playerHitHash);
         _hit = true;
 
+        _currentLife--;
+
         while (displacement < _hitDisplacement)
         {
-            Vector3 movement = direction * (_playerSpeed * 2) * Time.deltaTime;
-            transform.position += movement;
+            Vector2 movement = direction * (_playerSpeed * 2) * Time.deltaTime;
+            _rb.MovePosition(_rb.position + movement);
             displacement += movement.magnitude;
             yield return null;
         }
-        _hit = false;
 
+        if (_currentLife == 0)
+        {
+            GameManager.Instance.GameOver();
+        }
+        else
+        {
+            _hit = false;
+        }
     }
 }

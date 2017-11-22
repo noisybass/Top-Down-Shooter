@@ -65,6 +65,12 @@ public class GameManager : Singleton<GameManager> {
     protected override void Awake()
     {
         base.Awake();
+
+        _data.score = 0;
+        if (PlayerPrefs.HasKey("highScore"))
+            _data.highScore = PlayerPrefs.GetInt("highScore");
+        else
+            _data.highScore = 0;
     }
 
     void Start ()
@@ -75,44 +81,55 @@ public class GameManager : Singleton<GameManager> {
 
     private void Update()
     {
+        // GAMEPLAY -> PAUSE
         if (_state == GameState.GAMEPLAY && Input.GetKeyDown(KeyCode.Escape))
         {
             Time.timeScale = 0;
             SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+            Cursor.visible = true;
             _previousState = _state;
             _state = GameState.PAUSE_MENU;
         }
     }
 
-    // From START menu
+    public void AddScore()
+    {
+        _data.score++;
+    }
+
+    // START -> GAMEPLAY
     public void StartGame()
     {
         SceneManager.UnloadSceneAsync("StartMenu");
+        _data.score = 0;
         SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        Cursor.visible = false;
         _previousState = _state;
         _state = GameState.GAMEPLAY;
     }
 
-    // From GAME_OVER menu
+    // GAME_OVER -> GAMEPLAY
     public void RestartGame()
     {
         SceneManager.UnloadSceneAsync("GameOverMenu");
         SceneManager.UnloadSceneAsync("Gameplay");
+        _data.score = 0;
         SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
         _previousState = _state;
         _state = GameState.GAMEPLAY;
     }
 
-    // From PAUSE menu
+    // PAUSE -> GAMEPLAY
     public void ResumeGame()
     {
         SceneManager.UnloadSceneAsync("PauseMenu");
+        Cursor.visible = false;
         _previousState = _state;
         _state = GameState.GAMEPLAY;
         Time.timeScale = 1;
     }
 
-    // From PAUSE menu or GAME_OVER menu
+    // PAUSE -> MENU || GAME_OVER -> MENU
     public void BackToStartMenu()
     {
         if (_state == GameState.PAUSE_MENU)
@@ -126,12 +143,19 @@ public class GameManager : Singleton<GameManager> {
             SceneManager.UnloadSceneAsync("GameOverMenu");
             SceneManager.UnloadSceneAsync("Gameplay");
         }
+
+        if (_data.score > _data.highScore)
+        {
+            _data.highScore = _data.score;
+            PlayerPrefs.SetInt("highScore", _data.highScore);
+        }
+
         SceneManager.LoadScene("StartMenu", LoadSceneMode.Additive);
         _previousState = _state;
         _state = GameState.START_MENU;
     }
 
-    // From START menu or PAUSE menu
+    // MENU -> SETTINGS || PAUSE -> SETTINGS
     public void OpenSettings()
     {
         if (_state == GameState.START_MENU)
@@ -148,7 +172,7 @@ public class GameManager : Singleton<GameManager> {
         _state = GameState.SETTINGS_MENU;
     }
 
-    // From SETTINGS menu
+    // SETTINGS -> START || SETTINGS -> PAUSE
     public void CloseSettings()
     {
         if (_previousState == GameState.START_MENU)
@@ -165,6 +189,15 @@ public class GameManager : Singleton<GameManager> {
             _previousState = _state;
             _state = GameState.PAUSE_MENU;
         }
+    }
+
+    // GAMEPLAY -> GAME_OVER
+    public void GameOver()
+    {
+        SceneManager.LoadScene("GameOverMenu", LoadSceneMode.Additive);
+        Cursor.visible = true;
+        _previousState = _state;
+        _state = GameState.GAME_OVER;
     }
 
     public void ControllerSettingsChange(bool value)

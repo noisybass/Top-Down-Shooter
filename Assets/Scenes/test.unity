@@ -167,7 +167,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -704526411
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 46da2b0aa0b6cfd4583ea8d2b8827bcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1432,21 +1432,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114651286569959374, guid: 623dfb2f01e87144c9e2fac554bca65a,
-        type: 2}
-      propertyPath: _enemiesTarget
-      value: 
-      objectReference: {fileID: 941414655}
-    - target: {fileID: 114558073485931406, guid: 623dfb2f01e87144c9e2fac554bca65a,
-        type: 2}
-      propertyPath: _enemiesTarget
-      value: 
-      objectReference: {fileID: 941414655}
-    - target: {fileID: 114043158634394452, guid: 623dfb2f01e87144c9e2fac554bca65a,
-        type: 2}
-      propertyPath: _enemiesTarget
-      value: 
-      objectReference: {fileID: 941414655}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 623dfb2f01e87144c9e2fac554bca65a, type: 2}
   m_IsPrefabParent: 0
@@ -1499,7 +1484,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1832973879
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ca744b1c17d3104458b6fcbf5715ef8f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
