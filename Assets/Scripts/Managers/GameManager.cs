@@ -71,6 +71,14 @@ public class GameManager : Singleton<GameManager> {
             _data.highScore = PlayerPrefs.GetInt("highScore");
         else
             _data.highScore = 0;
+
+        if (PlayerPrefs.HasKey("controller"))
+        {
+            if (PlayerPrefs.GetInt("controller") == 1)
+                _settings.controller = true;
+            else
+                _settings.controller = false;
+        }
     }
 
     void Start ()
@@ -203,6 +211,10 @@ public class GameManager : Singleton<GameManager> {
     public void ControllerSettingsChange(bool value)
     {
         _settings.controller = value;
+        if (value)
+            PlayerPrefs.SetInt("controller", 1);
+        else
+            PlayerPrefs.SetInt("controller", 0);
     }
 
     public void VolumeSettingsChange(float value)

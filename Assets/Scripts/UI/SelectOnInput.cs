@@ -22,10 +22,16 @@ public class SelectOnInput : MonoBehaviour {
             eventSystem.SetSelectedGameObject(selectedObject);
             buttonSelected = true;
         }
-	}
+    }
 
     private void OnDisable()
     {
         buttonSelected = false;
+    }
+
+    public void Select(GameObject newSelectedObject)
+    {
+        eventSystem.SetSelectedGameObject(newSelectedObject);
+        buttonSelected = true;
     }
 }

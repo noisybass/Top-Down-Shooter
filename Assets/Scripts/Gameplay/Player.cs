@@ -72,6 +72,7 @@ public class Player : MonoBehaviour {
             // MOVEMENT
             float axis_h = Input.GetAxisRaw("Horizontal");
             float axis_v = Input.GetAxisRaw("Vertical");
+            Debug.Log(axis_h + " " + axis_v);
 
             Vector2 movement = Vector2.zero;
             float deltaSpeed = _playerSpeed * Time.deltaTime;

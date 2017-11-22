@@ -54,12 +54,12 @@ public class CameraController : MonoBehaviour {
                 _offset.y = Mathf.Clamp(_offset.y, -_maxOffsetY, _maxOffsetY);
                 _offset.x = _offset.y / p;
             }
-            transform.localPosition = _player.transform.position + _offset + _distanceToPlayer;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, _player.transform.position + _offset + _distanceToPlayer, 5 * Time.deltaTime);
 
             if (_shake > 0.0f)
             {
                 Vector3 displ = Random.insideUnitCircle * _shakeAmount;
-                displ.z = transform.localPosition.z;
+                displ.z = 0.0f;
                 transform.localPosition += displ;
                 _shake -= Time.deltaTime;
             }
