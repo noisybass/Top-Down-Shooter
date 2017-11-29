@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    private enum PlayerState
+    {
+        IDLE,
+        RUNNING
+    }
+
     [SerializeField]
     private float _playerSpeed = 150;
     [SerializeField]
     private float _hitDisplacement = 5.0f;
     private bool _hit = false;
+    private PlayerState _state = PlayerState.IDLE;
+    [SerializeField]
+    private float _dustSpawnTime = 0.2f;
+    private float _dustCurrentTime = 0.0f;
+    [SerializeField]
+    Transform _dustSpawnPoint;
 
     [SerializeField]
     private int _maxLife = 10;
@@ -52,7 +64,6 @@ public class Player : MonoBehaviour {
         _bulletPool = new Pool<Bullet>(20, _bulletPrefab, gameObject);
     }
 
-    
     void Start()
     {
         PixelsToUnits();
@@ -65,14 +76,12 @@ public class Player : MonoBehaviour {
         _hitDisplacement = _hitDisplacement * upp;
     }
 	
-	// Update is called once per frame
 	void FixedUpdate () {
         if (GameManager.Instance.State == GameManager.GameState.GAMEPLAY && !_hit)
         {
             // MOVEMENT
             float axis_h = Input.GetAxisRaw("Horizontal");
             float axis_v = Input.GetAxisRaw("Vertical");
-            Debug.Log(axis_h + " " + axis_v);
 
             Vector2 movement = Vector2.zero;
             float deltaSpeed = _playerSpeed * Time.deltaTime;
@@ -86,9 +95,10 @@ public class Player : MonoBehaviour {
             if (axis_v > 0)
                 movement.y += deltaSpeed;
 
-            _anim.SetFloat(_playerSpeedHash, movement.sqrMagnitude);
-
             _rb.MovePosition(_rb.position + movement);
+
+            _anim.SetFloat(_playerSpeedHash, movement.sqrMagnitude);
+            UpdateState(movement.sqrMagnitude, axis_h < 0);
 
             if (_aim.transform.position.x < transform.position.x)
                 _renderer.flipX = true;
@@ -121,6 +131,31 @@ public class Player : MonoBehaviour {
             {
                 _canShoot = true;
             }
+        }
+    }
+
+    void UpdateState(float movementSqrMagnitude, bool flipX)
+    {
+        if (_state == PlayerState.IDLE)
+        {
+            if (movementSqrMagnitude >= 0.001f)
+                _state = PlayerState.RUNNING;
+        }
+        else if (_state == PlayerState.RUNNING)
+        {
+            if (movementSqrMagnitude >= 0.001f)
+                _dustCurrentTime += Time.deltaTime;
+            else
+            {
+                _state = PlayerState.IDLE;
+                _dustCurrentTime = 0.0f;
+            }
+        }
+        if (_dustCurrentTime >= _dustSpawnTime)
+        {
+            //Spawn dust
+            EffectsManager.Instance.CreateEffect(EffectsManager.EffectType.DUST, _dustSpawnPoint.position, flipX);
+            _dustCurrentTime = 0.0f;
         }
     }
 

@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 539614115}
   - component: {fileID: 539614114}
   - component: {fileID: 539614116}
+  - component: {fileID: 539614117}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -307,6 +308,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c903979bfc3fd0a4ab02072163c33307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &539614117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 539614113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a9f1679e8206044946dabcf1e967af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dustPrefab: {fileID: 114181326178788752, guid: ffd4edf962b23f74280ce96918f37a0d,
+    type: 2}
+  _dustPoolSize: 5
+  _monsterHitPrefab: {fileID: 114181326178788752, guid: ffd4edf962b23f74280ce96918f37a0d,
+    type: 2}
+  _monsterHitPoolSize: 5
+  _objectHitPrefab: {fileID: 114181326178788752, guid: ffd4edf962b23f74280ce96918f37a0d,
+    type: 2}
+  _objectHitPoolSize: 5
+  _monsterSpawnPrefab: {fileID: 114181326178788752, guid: ffd4edf962b23f74280ce96918f37a0d,
+    type: 2}
+  _monsterSpawnPoolSize: 5
 --- !u!1 &622051670
 GameObject:
   m_ObjectHideFlags: 0
