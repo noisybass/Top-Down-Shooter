@@ -46,19 +46,19 @@ public class Bullet : MonoBehaviour {
 
             _currentTime += Time.deltaTime;
             if (_currentTime >= _timeToLife)
-                Die();
+                DestroyBullet();
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Block")
+        if (col.gameObject.tag == "Block")
         {
-            Die();
+            DestroyBullet();
         }
     }
 
-    void Die()
+    public void DestroyBullet()
     {
         GetComponentInParent<Player>().DestroyBullet(this);
     }

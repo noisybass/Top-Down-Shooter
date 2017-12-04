@@ -36,6 +36,7 @@ public class PointSpawner : MonoBehaviour {
     {
         Enemy enemy = _enemyPool.CreateObject();
         enemy.Init(transform.position, _enemiesTarget);
+        EffectsManager.Instance.CreateEffect(EffectsManager.EffectType.MONSTER_SPAWN, transform.position, false);
     }
 
     public void DestroyEnemy(Enemy enemy)

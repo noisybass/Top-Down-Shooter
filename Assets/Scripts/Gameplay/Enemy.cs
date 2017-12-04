@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour {
         _target = target;
         _hit = false;
         gameObject.SetActive(true);
+        StartCoroutine(Fade(true));
     }
 
     private void PixelsToUnits()
@@ -95,12 +96,17 @@ public class Enemy : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        Debug.Log("Collision");
         if (!_hit && (col.gameObject.tag == "Bullet" || 
                       col.gameObject.tag == "Dog" || 
                       col.gameObject.tag == "Enemy") ||
                       col.gameObject.tag == "Block")
         {
             StartCoroutine(Hit(col.contacts[0].normal, col.gameObject.tag));
+            if (col.gameObject.tag == "Bullet")
+            {
+                col.gameObject.GetComponent<Bullet>().DestroyBullet();
+            }
         }
     }
 
@@ -132,12 +138,42 @@ public class Enemy : MonoBehaviour {
         }
         if (_currentLife == 0)
         {
+            StartCoroutine(Fade(false));
             yield return new WaitForSeconds(1.0f);
             Die();
         }
         else
             _hit = false;
 
+    }
+
+    IEnumerator Fade(bool fadeIn)
+    {
+        float fadeTime = 1.0f;
+        float currentTime = 0.0f;
+        float currentAlpha;
+        float targetAlpha;
+
+        if (fadeIn)
+        {
+            currentAlpha = 0.0f;
+            targetAlpha = 1.0f;
+        }
+        else
+        {
+            currentAlpha = 1.0f;
+            targetAlpha = 0.0f;
+        }
+
+        while(currentTime <= fadeTime)
+        {
+            float newAlpha = Mathf.Lerp(currentAlpha, targetAlpha, currentTime / fadeTime);
+            Color color = _renderer.color;
+            color.a = newAlpha;
+            _renderer.color = color;
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     void Die()

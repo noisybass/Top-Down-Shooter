@@ -25,7 +25,6 @@ public class Effect : MonoBehaviour {
     {
         _duration = _animation.averageDuration;
         _renderer = GetComponentInChildren<SpriteRenderer>();
-        Debug.Log(_duration);
     }
 
     public void Init(Vector3 position, bool flipX)

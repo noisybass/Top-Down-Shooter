@@ -43,7 +43,7 @@ public class EffectsManager : Singleton<EffectsManager>
         _dustEffects = new Pool<Effect>(_dustPoolSize, _dustPrefab, gameObject);
         //_monsterHitEffects = new Pool<Effect>(_monsterHitPoolSize, _monsterHitPrefab, gameObject);
         //_objectHitEffects = new Pool<Effect>(_objectHitPoolSize, _objectHitPrefab, gameObject);
-        //_monsterSpawnEffects = new Pool<Effect>(_monsterSpawnPoolSize, _monsterSpawnPrefab, gameObject);
+        _monsterSpawnEffects = new Pool<Effect>(_monsterSpawnPoolSize, _monsterSpawnPrefab, gameObject);
     }
 
     public void CreateEffect(EffectType type, Vector3 position, bool flipX)
