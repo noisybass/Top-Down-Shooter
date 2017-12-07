@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    private float _upp;
     [SerializeField]
     private float _bulletSpeed = 10;
 
@@ -18,6 +17,8 @@ public class Bullet : MonoBehaviour {
         set { _direction = value; }
     }
 
+    private Slingshot _slingshot;
+
     void Start()
     {
         PixelsToUnits();
@@ -25,15 +26,16 @@ public class Bullet : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = 1.0f/ GameManager.Instance.Config.PPU;
-        _bulletSpeed = _bulletSpeed * _upp;
+        float upp = 1.0f / GameManager.Instance.Config.PPU;
+        _bulletSpeed = _bulletSpeed * upp;
     }
 
-    public void Init(Vector3 pos, Vector2 direction)
+    public void Init(Vector3 pos, Vector2 direction, Slingshot slingshot)
     {
         transform.position = pos;
         _direction = direction;
         _currentTime = 0.0f;
+        _slingshot = slingshot;
         gameObject.SetActive(true);
     }
 
@@ -60,6 +62,6 @@ public class Bullet : MonoBehaviour {
 
     public void DestroyBullet()
     {
-        GetComponentInParent<Player>().DestroyBullet(this);
+        _slingshot.DestroyBullet(this);
     }
 }

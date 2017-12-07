@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 9f3e29295f5908a4bb9b1780c1b9732d
-timeCreated: 1511201743
+guid: 533bb526d9c95e942a723a02d3c7f973
+timeCreated: 1512561251
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: House_0
-    21300002: House_1
+    21300000: house_back
+    21300002: house_front
+    21300004: tree_back
+    21300006: tree_front
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -59,6 +62,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -67,14 +71,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-  - buildTarget: Android
-    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -83,6 +80,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: WebGL
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -93,29 +91,57 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: House_0
+      name: house_back
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 84
-        height: 102
+        x: 3
+        y: 176
+        width: 80
+        height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: House_1
+      name: house_front
       rect:
         serializedVersion: 2
-        x: 84
-        y: 0
+        x: 87
+        y: 203
         width: 84
-        height: 102
+        height: 52
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: tree_back
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 193
+        width: 23
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: tree_front
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 135
+        width: 55
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

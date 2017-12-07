@@ -19,10 +19,6 @@ public class Aim : MonoBehaviour {
     private Camera _camera;
 
     private Vector2 _direction = new Vector2(1, 0);
-    public Vector2 Direction
-    {
-        get { return _direction; }
-    }
 
 	void Awake()
     {
@@ -46,11 +42,7 @@ public class Aim : MonoBehaviour {
         mousePos.x = Mathf.Clamp(mousePos.x, 0, _camera.pixelWidth);
         mousePos.y = Mathf.Clamp(mousePos.y, 0, _camera.pixelHeight);
 
-        Vector3 worldPos = Vector3.zero;
-        worldPos = _camera.ScreenToWorldPoint(mousePos);
-        worldPos.z = 0.0f;
-        _direction = new Vector2(worldPos.x, worldPos.y).normalized;
-
+        Vector2 worldPos = _camera.ScreenToWorldPoint(mousePos);
         transform.position = worldPos;
 
         Vector3 playerToAim = transform.position - _player.transform.position;
