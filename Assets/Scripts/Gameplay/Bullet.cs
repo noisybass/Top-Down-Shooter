@@ -17,8 +17,6 @@ public class Bullet : MonoBehaviour {
         set { _direction = value; }
     }
 
-    private Slingshot _slingshot;
-
     void Start()
     {
         PixelsToUnits();
@@ -30,12 +28,11 @@ public class Bullet : MonoBehaviour {
         _bulletSpeed = _bulletSpeed * upp;
     }
 
-    public void Init(Vector3 pos, Vector2 direction, Slingshot slingshot)
+    public void Init(Vector3 pos, Vector2 direction)
     {
         transform.position = pos;
         _direction = direction;
         _currentTime = 0.0f;
-        _slingshot = slingshot;
         gameObject.SetActive(true);
     }
 
@@ -62,6 +59,6 @@ public class Bullet : MonoBehaviour {
 
     public void DestroyBullet()
     {
-        _slingshot.DestroyBullet(this);
+        transform.parent.GetComponent<WeaponSystem>().DestroyBullet(this);
     }
 }

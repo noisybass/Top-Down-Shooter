@@ -33,12 +33,7 @@ public class Player : MonoBehaviour {
     private int _currentLife = 10;
     public int CurrentLife { get { return _currentLife; } }
 
-    [Space(20)]
-    [SerializeField]
-    private Aim _aim;
-    [SerializeField]
-    private Slingshot _slingshot;
-
+    private WeaponSystem _weaponSystem;
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
     private Animator _anim;
@@ -47,6 +42,7 @@ public class Player : MonoBehaviour {
 
 	void Awake()
     {
+        _weaponSystem = GetComponentInChildren<WeaponSystem>();
         _rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
@@ -79,11 +75,10 @@ public class Player : MonoBehaviour {
             UpdateState(movement.sqrMagnitude, input.x < 0);
 
             // WEAPON SYSTEM
-            _aim.CustomUpdate();
-            _slingshot.CustomUpdate(_renderer.sortingOrder + 1);
+            _weaponSystem.CustomUpdate(_renderer.sortingOrder);
 
             // UPDATE FACING
-            if (_aim.transform.position.x < transform.position.x)
+            if (_weaponSystem.AimPosition().x < transform.position.x)
                 _renderer.flipX = true;
             else
                 _renderer.flipX = false;

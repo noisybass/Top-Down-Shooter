@@ -7,20 +7,13 @@ public class Slingshot : MonoBehaviour {
 
     [SerializeField]
     private Aim _aim;
-
-    [SerializeField]
-    private Bullet _bulletPrefab;
-    private Pool<Bullet> _bulletPool;
-    private bool _canShoot = true;
-    private ShootEvent _shootEvent;
-
     private SpriteRenderer _renderer;
+
+    private bool _kicking = false;
 
     private void Awake()
     {
         _renderer = gameObject.GetComponentInChildren<SpriteRenderer>();
-        _bulletPool = new Pool<Bullet>(20, _bulletPrefab, transform.parent.gameObject);
-        _shootEvent = new ShootEvent();
     }
 
     public void CustomUpdate (int sortingOrder)
@@ -40,41 +33,23 @@ public class Slingshot : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
 
         _renderer.sortingOrder = sortingOrder;
+    }
 
-        // SHOOTING
-        bool shoot = false;
-        if (GameManager.Instance.Settings.controller)
-            shoot = Input.GetAxisRaw("Shoot") == 1.0f ? true : false;
-        else
-            shoot = Input.GetMouseButtonDown(0);
-
-        if (shoot)
+    public void Kick()
+    {
+        if (!_kicking)
         {
-            if (_canShoot)
-            {
-                _canShoot = false;
-                CreateBullet();
-                EventManager.Instance.OnEvent(this, _shootEvent);
-            }
+            _kicking = true;
+            StartCoroutine(KickCoroutine());
         }
-        else
-            _canShoot = true;
     }
 
-    void CreateBullet()
+    IEnumerator KickCoroutine()
     {
-        Bullet bullet = _bulletPool.CreateObject();
-        Vector3 direction = (_aim.transform.position - transform.position).normalized;
-        bullet.Init(transform.position + 2 * direction, direction, this);
-    }
-
-    public void DestroyBullet(Bullet bullet)
-    {
-        _bulletPool.DestroyObject(bullet);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, _aim.transform.position);
+        Vector3 oldPos = _renderer.gameObject.transform.localPosition;
+        _renderer.gameObject.transform.localPosition += new Vector3(-0.2f, 0.0f, 0.0f);
+        yield return new WaitForSeconds(0.2f);
+        _renderer.gameObject.transform.localPosition = oldPos;
+        _kicking = false;
     }
 }
