@@ -72,13 +72,20 @@ public class GameManager : Singleton<GameManager> {
         else
             _data.highScore = 0;
 
-        if (PlayerPrefs.HasKey("controller"))
+        if (IsControllerConnected())
         {
-            if (PlayerPrefs.GetInt("controller") == 1)
-                _settings.controller = true;
+            if (PlayerPrefs.HasKey("controller"))
+            {
+                if (PlayerPrefs.GetInt("controller") == 1)
+                    _settings.controller = true;
+                else
+                    _settings.controller = false;
+            }
             else
-                _settings.controller = false;
+                _settings.controller = true;
         }
+        else
+            _settings.controller = false;
     }
 
     void Start ()
@@ -98,6 +105,11 @@ public class GameManager : Singleton<GameManager> {
             _previousState = _state;
             _state = GameState.PAUSE_MENU;
         }
+    }
+
+    public bool IsControllerConnected()
+    {
+        return Input.GetJoystickNames().Length != 0;
     }
 
     public void AddScore()
