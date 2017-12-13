@@ -815,57 +815,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114417051959570002, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
-        type: 2}
-      propertyPath: _camera
-      value: 
-      objectReference: {fileID: 823315988}
-    - target: {fileID: 4363109680244382, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363109680244382, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114454513436288112, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
-        type: 2}
-      propertyPath: _dustSpawnTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1114361991306024, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557871570359882, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1519963667026198, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1549139888 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1557871570359882, guid: 0b1c0924cb379ca408ffdbf54e6f3e9f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1549139887}
---- !u!114 &1549139889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1549139888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4bf38f056edad241b185f2547405f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 114321954084774644, guid: 59d0b0bd2fe400241bdf2acecc41e229,
-    type: 2}
 --- !u!1 &1737349366
 GameObject:
   m_ObjectHideFlags: 0

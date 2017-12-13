@@ -216,7 +216,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233013470917600}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.614, y: -0.433, z: 0}
+  m_LocalPosition: {x: 0.622, y: -0.376, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4784091702160468}
@@ -316,8 +316,6 @@ MonoBehaviour:
   _dustSpawnTime: 0.2
   _dustSpawnPoint: {fileID: 4363109680244382}
   _maxLife: 10
-  _aim: {fileID: 114417051959570002}
-  _slingshot: {fileID: 114677648909493964}
 --- !u!114 &114677648909493964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,8 +328,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aim: {fileID: 114417051959570002}
-  _bulletPrefab: {fileID: 114321954084774644, guid: 59d0b0bd2fe400241bdf2acecc41e229,
-    type: 2}
 --- !u!212 &212163248944999800
 SpriteRenderer:
   m_ObjectHideFlags: 1

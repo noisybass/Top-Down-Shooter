@@ -68,6 +68,7 @@ public class WeaponSystem : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, _aim.transform.position);
+        if (_aim != null)
+            Gizmos.DrawLine(transform.position, _aim.transform.position);
     }
 }
