@@ -10,7 +10,8 @@ public class Player : MonoBehaviour {
     private enum PlayerState
     {
         IDLE,
-        RUNNING
+        RUNNING,
+        DEATH
     }
     private PlayerState _state = PlayerState.IDLE;
 
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour {
     private Animator _anim;
     int _playerSpeedHash = Animator.StringToHash("playerSpeed");
     int _playerHitHash = Animator.StringToHash("playerHit");
+    int _playerLifeHash = Animator.StringToHash("playerLife");
 
 	void Awake()
     {
@@ -122,11 +124,15 @@ public class Player : MonoBehaviour {
     IEnumerator Hit(Vector2 direction)
     {
         float displacement = 0.0f;
-
-        _anim.SetTrigger(_playerHitHash);
         _hit = true;
-
         _currentLife--;
+        _anim.SetInteger(_playerLifeHash, _currentLife);
+        _anim.SetTrigger(_playerHitHash);
+
+        if (_currentLife == 0)
+        {
+            _weaponSystem.gameObject.SetActive(false);
+        }
 
         while (displacement < _hitDisplacement)
         {
@@ -138,6 +144,7 @@ public class Player : MonoBehaviour {
 
         if (_currentLife == 0)
         {
+            _state = PlayerState.DEATH;
             GameManager.Instance.GameOver();
         }
         else

@@ -47,6 +47,8 @@ public class Enemy : MonoBehaviour {
     public void Init(Vector3 pos, Transform target)
     {
         _rb.MovePosition(pos);
+        transform.position = pos;
+        _rb.simulated = true;
         _currentLife = _enemyLife;
         _target = target;
         _hit = false;
@@ -124,7 +126,10 @@ public class Enemy : MonoBehaviour {
                 _currentLife--;
 
             if (_currentLife == 0)
+            {
                 GameManager.Instance.AddScore();
+                _rb.simulated = false;
+            }
 
             _anim.SetInteger(_enemyLifeHash, _currentLife);
             _anim.SetTrigger(_enemyHitHash);

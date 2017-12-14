@@ -9,17 +9,17 @@ public class Dog : MonoBehaviour {
         IDLE,
         FOLLOW,
         CHASE,
-        ATTACK
+        ATTACK,
+        DEATH
     }
 
-    private float _upp;
     [SerializeField]
     private float _dogSpeed = 120;
     [SerializeField]
     private float _idleDistToPlayer = 60;
     [SerializeField]
     private float _chaseDistToTarget = 50;
-    private DogState _state;
+    private DogState _state = DogState.IDLE;
 
     [SerializeField]
     private float _hitDisplacement = 5;
@@ -28,6 +28,8 @@ public class Dog : MonoBehaviour {
     [SerializeField]
     private int _maxLife = 10;
     private int _currentLife = 10;
+
+    private bool _attacking = false;
 
     public int MaxLife
     {
@@ -41,6 +43,9 @@ public class Dog : MonoBehaviour {
     private SpriteRenderer _renderer;
     private Animator _anim;
     int _dogSpeedHash = Animator.StringToHash("dogSpeed");
+    int _dogHitHash = Animator.StringToHash("dogHit");
+    int _dogLifeHash = Animator.StringToHash("dogLife");
+    int _dogAttackHash = Animator.StringToHash("dogAttack");
 
     [SerializeField]
     private Transform _player;
@@ -50,7 +55,6 @@ public class Dog : MonoBehaviour {
     {
         _renderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
-        _state = DogState.IDLE;
     }
 
 	void Start () {
@@ -59,10 +63,10 @@ public class Dog : MonoBehaviour {
 
     private void PixelsToUnits()
     {
-        _upp = 1.0f / GameManager.Instance.Config.PPU;
-        _dogSpeed = _dogSpeed * _upp;
-        _idleDistToPlayer = _idleDistToPlayer * _upp;
-        _chaseDistToTarget = _chaseDistToTarget * _upp;
+        float upp = 1.0f / GameManager.Instance.Config.PPU;
+        _dogSpeed = _dogSpeed * upp;
+        _idleDistToPlayer = _idleDistToPlayer * upp;
+        _chaseDistToTarget = _chaseDistToTarget * upp;
     }
 
     void Update()
@@ -105,7 +109,8 @@ public class Dog : MonoBehaviour {
 
                     break;
                 case DogState.ATTACK:
-                    Attack();
+                    if (!_attacking)
+                        Attack();
                     break;
             }
             _renderer.sortingOrder = (int)(-transform.position.y + _renderer.bounds.extents.y);
@@ -137,6 +142,8 @@ public class Dog : MonoBehaviour {
         Vector3 movement = direction * _dogSpeed * Time.deltaTime;
         transform.position += movement;
 
+        _anim.SetFloat(_dogSpeedHash, movement.sqrMagnitude);
+
         if (direction.x > 0)
             _renderer.flipX = false;
         else
@@ -146,7 +153,17 @@ public class Dog : MonoBehaviour {
 
     private void Attack()
     {
+        StartCoroutine(AttackCoroutine());
+    }
+
+    IEnumerator AttackCoroutine()
+    {
+        _attacking = true;
+        _anim.SetTrigger(_dogAttackHash);
+        SoundManager.Instance.PlayDogAttack();
+        yield return new WaitForSeconds(0.5f);
         _state = DogState.IDLE;
+        _attacking = false;
     }
 
     private bool IsNearPlayer()
@@ -198,10 +215,10 @@ public class Dog : MonoBehaviour {
     IEnumerator Hit(Vector3 direction)
     {
         float displacement = 0.0f;
-
         _hit = true;
-
         _currentLife--;
+        _anim.SetInteger(_dogLifeHash, _currentLife);
+        _anim.SetTrigger(_dogHitHash);
 
         while (displacement < _hitDisplacement)
         {
@@ -213,6 +230,7 @@ public class Dog : MonoBehaviour {
 
         if (_currentLife == 0)
         {
+            _state = DogState.DEATH;
             GameManager.Instance.GameOver();
         }
         else
