@@ -92,6 +92,7 @@ public class GameManager : Singleton<GameManager> {
     {
         _state = _previousState = GameState.START_MENU;
         SceneManager.LoadScene("StartMenu", LoadSceneMode.Additive);
+        SoundManager.Instance.PlayMusic();
     }
 
     private void Update()
@@ -215,6 +216,7 @@ public class GameManager : Singleton<GameManager> {
     public void GameOver()
     {
         SceneManager.LoadScene("GameOverMenu", LoadSceneMode.Additive);
+        SoundManager.Instance.PlayDeath();
         Cursor.visible = true;
         _previousState = _state;
         _state = GameState.GAME_OVER;

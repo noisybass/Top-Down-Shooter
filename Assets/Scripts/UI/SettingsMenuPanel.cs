@@ -18,6 +18,7 @@ public class SettingsMenuPanel : MonoBehaviour {
     public void CloseSettings()
     {
         GameManager.Instance.CloseSettings();
+        SoundManager.Instance.PlayButton();
     }
 
     public void ControllerSettingsChange(bool value)

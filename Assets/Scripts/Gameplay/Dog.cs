@@ -185,10 +185,12 @@ public class Dog : MonoBehaviour {
             {
                 Debug.Log("ATTACK");
                 _state = DogState.ATTACK;
+                SoundManager.Instance.PlayDogAttack();
             }
             else
             {
                 StartCoroutine(Hit(col.contacts[0].normal));
+                SoundManager.Instance.PlayDogHit();
             }
         }
     }

@@ -106,6 +106,7 @@ public class Enemy : MonoBehaviour {
             if (col.gameObject.tag == "Bullet")
             {
                 col.gameObject.GetComponent<Bullet>().DestroyBullet();
+                SoundManager.Instance.PlayMonsterHit();
             }
         }
     }

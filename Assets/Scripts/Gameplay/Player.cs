@@ -115,6 +115,7 @@ public class Player : MonoBehaviour {
         if (!_hit && col.gameObject.tag == "Enemy")
         {
             StartCoroutine(Hit(col.contacts[0].normal));
+            SoundManager.Instance.PlayPlayerHit();
         }
     }
 

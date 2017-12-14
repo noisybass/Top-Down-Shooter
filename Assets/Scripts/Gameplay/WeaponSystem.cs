@@ -43,6 +43,7 @@ public class WeaponSystem : MonoBehaviour {
                 CreateBullet();
                 _slingshot.Kick();
                 EventManager.Instance.OnEvent(this, _shootEvent);
+                SoundManager.Instance.PlayShoot();
             }
         }
         else

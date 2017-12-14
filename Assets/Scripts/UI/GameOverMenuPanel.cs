@@ -7,10 +7,12 @@ public class GameOverMenuPanel : MonoBehaviour {
 	public void RestartGame()
     {
         GameManager.Instance.RestartGame();
+        SoundManager.Instance.PlayButton();
     }
 
     public void BackToStartMenu()
     {
         GameManager.Instance.BackToStartMenu();
+        SoundManager.Instance.PlayButton();
     }
 }

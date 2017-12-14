@@ -7,11 +7,13 @@ public class StartMenuPanel : MonoBehaviour {
 	public void StartGame()
     {
         GameManager.Instance.StartGame();
+        SoundManager.Instance.PlayButton();
     }
 
     public void OpenSettings()
     {
         GameManager.Instance.OpenSettings();
+        SoundManager.Instance.PlayButton();
     }
 
     public void QuitGame()

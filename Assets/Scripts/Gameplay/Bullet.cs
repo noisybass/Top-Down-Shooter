@@ -54,6 +54,7 @@ public class Bullet : MonoBehaviour {
         if (col.gameObject.tag == "Block")
         {
             DestroyBullet();
+            SoundManager.Instance.PlayHit();
         }
     }
 
