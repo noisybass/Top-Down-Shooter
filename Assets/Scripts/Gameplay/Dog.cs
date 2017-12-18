@@ -76,6 +76,7 @@ public class Dog : MonoBehaviour {
             switch (_state)
             {
                 case DogState.IDLE:
+                    Debug.Log("IDLE");
                     if (StartChasingEnemy())
                         _state = DogState.CHASE;
                     else
@@ -87,6 +88,7 @@ public class Dog : MonoBehaviour {
                     }
                     break;
                 case DogState.FOLLOW:
+                    Debug.Log("FOLLOW");
                     if (StartChasingEnemy())
                         _state = DogState.CHASE;
                     else
@@ -98,6 +100,7 @@ public class Dog : MonoBehaviour {
                     }
                     break;
                 case DogState.CHASE:
+                    Debug.Log("CHASE");
                     if (IsNearTarget())
                     {
                         Chase();
@@ -109,6 +112,7 @@ public class Dog : MonoBehaviour {
 
                     break;
                 case DogState.ATTACK:
+                    Debug.Log("ATTACK");
                     if (!_attacking)
                         Attack();
                     break;
@@ -200,7 +204,6 @@ public class Dog : MonoBehaviour {
         {
             if (_state == DogState.CHASE && _targetEnemy == col.gameObject)
             {
-                Debug.Log("ATTACK");
                 _state = DogState.ATTACK;
                 SoundManager.Instance.PlayDogAttack();
             }
