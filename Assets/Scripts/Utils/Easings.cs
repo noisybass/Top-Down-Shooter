@@ -126,7 +126,9 @@ public class Easings
     {
         public static float In(float t)
         {
-            return 1f - Mathf.Sqrt(1f - t * t);
+            float k = 1f - t * t;
+            if (k < 0f) k = 0f;
+            return 1f - Mathf.Sqrt(k);
         }
 
         public static float Out(float t)
