@@ -20,14 +20,10 @@ public abstract class Tween<T> : MonoBehaviour
     }
     public delegate float EasingFunction(float t);
 
-    [SerializeField]
-    protected T _begin;
-    [SerializeField]
-    protected T _end;
-    [SerializeField]
-    protected float _duration;
-    [SerializeField]
-    protected EasingType _easingType;
+    public T begin;
+    public T end;
+    public float duration;
+    public EasingType easingType;
 
     protected float _time;
     protected bool _tween = false;
@@ -35,7 +31,7 @@ public abstract class Tween<T> : MonoBehaviour
 
     protected void Awake()
     {
-        switch (_easingType)
+        switch (easingType)
         {
             case EasingType.LINEAR:
                 _easingFunction = Easings.Linear;
@@ -88,9 +84,9 @@ public abstract class Tween<T> : MonoBehaviour
         {
             _tween = true;
             _time = 0f;
-            _begin = begin;
-            _end = end;
-            _duration = duration;
+            this.begin = begin;
+            this.end = end;
+            this.duration = duration;
         }
     }
 
@@ -99,9 +95,9 @@ public abstract class Tween<T> : MonoBehaviour
         if (_tween)
         {
             _time += Time.deltaTime;
-            ApplyEasing(_easingFunction(_time / _duration));
+            ApplyEasing(_easingFunction(_time / duration));
 
-            if (_time > _duration)
+            if (_time > duration)
                 _tween = false;
         }
         else

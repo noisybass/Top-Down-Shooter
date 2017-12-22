@@ -6,6 +6,6 @@ public class TweenScale3D : Tween<Vector3>
 {
     protected override void ApplyEasing(float t)
     {
-        transform.localScale = _begin + t * (_end - 2f * _begin);
+        transform.localScale = begin + t * (end - 2f * begin);
     }
 }

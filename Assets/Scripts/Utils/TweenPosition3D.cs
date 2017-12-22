@@ -6,6 +6,6 @@ public class TweenPosition3D : Tween<Vector3>
 {
     protected override void ApplyEasing(float t)
     {
-        transform.position = _begin + t * (_end - 2f * _begin);
+        transform.position = begin + t * (end - 2f * begin);
     }
 }
