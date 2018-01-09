@@ -10,19 +10,21 @@ public class TweenEditor<T> : Editor
     {
         //base.OnInspectorGUI();
         Tween<T> tweenTarget = (Tween<T>)target;
-        EditorGUILayout.FloatField("Duration", tweenTarget.duration);
 
-        //if (target.GetType() == typeof(TweenPosition2D) || target.GetType() == typeof(TweenScale2D))
-        //{
-        //    Tween<Vector2> tweenTarget = (Tween<Vector2>)target;
-        //    EditorGUILayout.Vector2Field("Begin Position", tweenTarget.begin);
-        //    EditorGUILayout.Vector2Field("End Position", tweenTarget.end);
-        //}
-        //else if (target.GetType() == typeof(TweenPosition3D) || target.GetType() == typeof(TweenScale3D))
-        //{
-        //    Tween<Vector3> tweenTarget = (Tween<Vector3>)target;
-        //    EditorGUILayout.Vector3Field("Begin Position", tweenTarget.begin);
-        //    EditorGUILayout.Vector3Field("End Position", tweenTarget.end);
-        //}
+        // Duration
+        tweenTarget.duration = EditorGUILayout.FloatField("Duration", tweenTarget.duration);
+
+        // Easing type
+        tweenTarget.easingType = (Tween<T>.EasingType)EditorGUILayout.EnumPopup("Easing function", tweenTarget.easingType);
+        if (tweenTarget.easingType != Tween<T>.EasingType.LINEAR)
+        {
+            if (tweenTarget.easingType != Tween<T>.EasingType.CUSTOM)
+                tweenTarget.inOut = (Tween<T>.InOut)EditorGUILayout.EnumPopup("In Out", tweenTarget.inOut);
+            else
+                tweenTarget.customCurve = EditorGUILayout.CurveField("Custom Curve", tweenTarget.customCurve);
+        }
+
+        // Play on awake
+        tweenTarget.playOnAwake = EditorGUILayout.Toggle("Play On Awake", tweenTarget.playOnAwake);
     }
 }

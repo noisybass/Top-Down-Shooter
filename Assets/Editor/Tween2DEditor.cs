@@ -11,7 +11,10 @@ public class Tween2DEditor : TweenEditor<Vector2>
         base.OnInspectorGUI();
 
         Tween<Vector2> tweenTarget = (Tween<Vector2>)target;
-        EditorGUILayout.Vector2Field("Begin Position", tweenTarget.begin);
-        EditorGUILayout.Vector2Field("End Position", tweenTarget.end);
+
+        // Begin
+        tweenTarget.begin = EditorGUILayout.Vector2Field("Begin", tweenTarget.begin);
+        // End
+        tweenTarget.end = EditorGUILayout.Vector2Field("End", tweenTarget.end);
     }
 }

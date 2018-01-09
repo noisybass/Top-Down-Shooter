@@ -16,14 +16,25 @@ public abstract class Tween<T> : MonoBehaviour
         CIRCULAR,
         ELASTIC,
         BACK,
-        BOUNCE
+        BOUNCE,
+        CUSTOM
+    }
+    public enum InOut
+    {
+        IN,
+        OUT,
+        INOUT
     }
     public delegate float EasingFunction(float t);
 
     public T begin;
     public T end;
     public float duration;
-    public EasingType easingType;
+    public EasingType easingType = EasingType.LINEAR;
+    public InOut inOut = InOut.IN;
+    public bool playOnAwake = false;
+    public AnimationCurve customCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    protected Easings.CustomEasing customEasing = null;
 
     protected float _time;
     protected bool _tween = false;
@@ -37,36 +48,93 @@ public abstract class Tween<T> : MonoBehaviour
                 _easingFunction = Easings.Linear;
                 break;
             case EasingType.QUADRATIC:
-                _easingFunction = Easings.Quadratic.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Quadratic.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Quadratic.Out;
+                else
+                    _easingFunction = Easings.Quadratic.InOut;
                 break;
             case EasingType.CUBIC:
-                _easingFunction = Easings.Cubic.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Cubic.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Cubic.Out;
+                else
+                    _easingFunction = Easings.Cubic.InOut;
                 break;
             case EasingType.QUARTIC:
-                _easingFunction = Easings.Quartic.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Quartic.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Quartic.Out;
+                else
+                    _easingFunction = Easings.Quartic.InOut;
                 break;
             case EasingType.QUINTIC:
-                _easingFunction = Easings.Quintic.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Quintic.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Quintic.Out;
+                else
+                    _easingFunction = Easings.Quintic.InOut;
                 break;
             case EasingType.SINUSOIDAL:
-                _easingFunction = Easings.Sinusoidal.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Sinusoidal.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Sinusoidal.Out;
+                else
+                    _easingFunction = Easings.Sinusoidal.InOut;
                 break;
             case EasingType.EXPONENTIAL:
-                _easingFunction = Easings.Exponential.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Exponential.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Exponential.Out;
+                else
+                    _easingFunction = Easings.Exponential.InOut;
                 break;
             case EasingType.CIRCULAR:
-                _easingFunction = Easings.Circular.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Circular.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Circular.Out;
+                else
+                    _easingFunction = Easings.Circular.InOut;
                 break;
             case EasingType.ELASTIC:
-                _easingFunction = Easings.Elastic.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Elastic.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Elastic.Out;
+                else
+                    _easingFunction = Easings.Elastic.InOut;
                 break;
             case EasingType.BACK:
-                _easingFunction = Easings.Back.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Back.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Back.Out;
+                else
+                    _easingFunction = Easings.Back.InOut;
                 break;
             case EasingType.BOUNCE:
-                _easingFunction = Easings.Bounce.In;
+                if (inOut == InOut.IN)
+                    _easingFunction = Easings.Bounce.In;
+                else if (inOut == InOut.OUT)
+                    _easingFunction = Easings.Bounce.Out;
+                else
+                    _easingFunction = Easings.Bounce.InOut;
+                break;
+            case EasingType.CUSTOM:
+                customEasing = new Easings.CustomEasing(customCurve);
+                _easingFunction = customEasing.Easing;
                 break;
         }
+
+        if (playOnAwake)
+            Play();
     }
 
     public void Play()

@@ -219,4 +219,19 @@ public class Easings
             return Out(t*2f - 1f) * 0.5f + 0.5f;
         }
     };
+
+    public class CustomEasing
+    {
+        private AnimationCurve _customCurve;
+
+        public CustomEasing(AnimationCurve curve)
+        {
+            _customCurve = curve;
+        }
+
+        public float Easing(float t)
+        {
+            return _customCurve.Evaluate(t);
+        }
+    }
 }
