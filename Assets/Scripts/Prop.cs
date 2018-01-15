@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Prop : MonoBehaviour {
 
-    private void Awake()
+    private void Start()
     {
         foreach(SpriteRenderer renderer in GetComponentsInChildren<SpriteRenderer>())
         {

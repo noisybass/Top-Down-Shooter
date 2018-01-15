@@ -9,13 +9,14 @@ public class RandomWalkGenerator : MapGenerator
     public RandomWalkGenerator()
         : base()
     {
-        _totalFloorCells = 50;
+        _totalFloorCells = (int)((_width * _height) * (_fillPercentage / 100.0f));
     }
 
-    public RandomWalkGenerator(int width, int height, int fillPercentage, int smoothing, int totalFloorCells)
+    public RandomWalkGenerator(int width, int height, int fillPercentage, int smoothing)
         : base(width, height, fillPercentage, smoothing)
     {
-        _totalFloorCells = totalFloorCells;
+        _totalFloorCells = (int)((_width * _height) * (_fillPercentage/100.0f));
+        //_totalFloorCells = 1;
     }
 
     public override int[,] CleanMapWalls(int wallThresholdSize)
@@ -26,23 +27,23 @@ public class RandomWalkGenerator : MapGenerator
     public override int[,] GenerateMap()
     {
         int minX = 1;
-        int maxX = _width - 1;
+        int maxX = _width;
         int minY = 1;
-        int maxY = _height - 1;
+        int maxY = _height;
         int randomX = UnityEngine.Random.Range(minX, maxX);
         int randomY = UnityEngine.Random.Range(minY, maxY);
         MapGenerator.Cell currentCell = new Cell(randomX, randomY);
 
         for (int i = 0; i < _width; i++)
-            for (int j = 0; j > _height; j++)
+            for (int j = 0; j < _height; j++)
                 _map[i,j] = 1;
 
         int floorCells = 0;
         while (floorCells < _totalFloorCells)
         {
-            Cell nextCell = GetNextCell(currentCell, UnityEngine.Random.Range(0, 3));
+            Cell nextCell = GetNextCell(currentCell, UnityEngine.Random.Range(0, 4));
 
-            if (nextCell.x > 1 && nextCell.x < _width - 1 && nextCell.y > 0 && nextCell.y < _height - 1)
+            if (nextCell.x > 0 && nextCell.x < _width - 1 && nextCell.y > 0 && nextCell.y < _height - 1)
             {
                 currentCell = nextCell;
 
@@ -63,6 +64,7 @@ public class RandomWalkGenerator : MapGenerator
 
     public override int[,] SmoothMap()
     {
+        Debug.Log("SMOOTHING");
         int[,] newMap = _map;
 
         for (int i = 0; i < _width; i++)
@@ -73,8 +75,8 @@ public class RandomWalkGenerator : MapGenerator
 
                 if (neighbors > 4)
                     newMap[i,j] = 1;
-                else if (neighbors < 4)
-                    newMap[i,j] = 0;
+                //else if (neighbors < 4)
+                //    newMap[i,j] = 0;
             }
         }
 

@@ -62,6 +62,9 @@ public class GameManager : Singleton<GameManager> {
         get { return _state; }
     }
 
+    [SerializeField]
+    private Map _map;
+
     protected override void Awake()
     {
         base.Awake();
@@ -106,6 +109,11 @@ public class GameManager : Singleton<GameManager> {
             _previousState = _state;
             _state = GameState.PAUSE_MENU;
         }
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.G))
+            _map.GenerateMap();
+#endif
     }
 
     public bool IsControllerConnected()
@@ -135,6 +143,7 @@ public class GameManager : Singleton<GameManager> {
         SceneManager.UnloadSceneAsync("GameOverMenu");
         SceneManager.UnloadSceneAsync("Gameplay");
         _data.score = 0;
+        _map.GenerateMap();
         SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
         _previousState = _state;
         _state = GameState.GAMEPLAY;
@@ -171,6 +180,7 @@ public class GameManager : Singleton<GameManager> {
             PlayerPrefs.SetInt("highScore", _data.highScore);
         }
 
+        _map.GenerateMap();
         SceneManager.LoadScene("StartMenu", LoadSceneMode.Additive);
         _previousState = _state;
         _state = GameState.START_MENU;
