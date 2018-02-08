@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Map : MonoBehaviour {
 
@@ -8,6 +9,15 @@ public class Map : MonoBehaviour {
     {
         RANDOM_WALK,
         CELLULAR_AUTOMATA
+    }
+
+    [Serializable]
+    public struct MapTiles
+    {
+        public GameObject[] floorBorder;
+        public GameObject[] floor;
+        public GameObject[] wallBorder;
+        public GameObject[] wall;
     }
 
     private MapGenerator _mapGen;
@@ -19,9 +29,9 @@ public class Map : MonoBehaviour {
     private int _height;
     public int fillPercentage;
     public int smoothing;
-    public GameObject[] mapTiles;
-    public int xSeparation = 6;
-    public int ySeparation = 6;
+    public MapTiles mapTiles;
+    public int xSeparation = 4;
+    public int ySeparation = 4;
     public int border = 6;
 
     private void Awake()
@@ -74,11 +84,6 @@ public class Map : MonoBehaviour {
         for (int i = border / 2; i < mapWidth + border / 2; i++)
             for (int j = border / 2; j < mapHeight + border / 2; j++)
                 _map[i, j] = innerMap[i - border / 2, j - border / 2];
-
-        //Central zone empty
-        for (int i = mapWidth / 2 - 1; i < mapWidth / 2 + 1; i++)
-            for (int j = mapHeight / 2 - 1; j < mapHeight / 2 + 1; j++)
-                innerMap[i, j] = 0;
     }
 
     public void GenerateMap()
@@ -90,8 +95,8 @@ public class Map : MonoBehaviour {
         int[,] innerMap = _mapGen.GenerateMap();
 
         //Central zone empty
-        for (int i = mapWidth / 2 - 2; i < mapWidth / 2 + 2; i++)
-            for (int j = mapHeight / 2 - 2; j < mapHeight / 2 + 2; j++)
+        for (int i = mapWidth / 2 - 4; i < mapWidth / 2 + 4; i++)
+            for (int j = mapHeight / 2 - 4; j < mapHeight / 2 + 4; j++)
                 innerMap[i, j] = 0;
 
         for (int i = border/2; i < mapWidth + border/2; i++)
@@ -117,13 +122,59 @@ public class Map : MonoBehaviour {
             {
                 if (_map[i, j] == 1)
                 {
-                    int randomIndex = UnityEngine.Random.Range(0, mapTiles.Length);
-                    if (j % 2 == 0)
-                        GameObject.Instantiate(mapTiles[randomIndex], new Vector3((i - _width / 2) * xSeparation, (j - _height / 2) * ySeparation, 0), Quaternion.identity, transform);
+                    if (j > 1 && _map[i, j - 1] == 0)
+                        GameObject.Instantiate(GetWallBorder(), new Vector3((i - _width / 2) * xSeparation, (j - _height / 2) * ySeparation, 0), Quaternion.identity, transform);
                     else
-                        GameObject.Instantiate(mapTiles[randomIndex], new Vector3((i - _width / 2) * xSeparation + xSeparation / 2.0f, (j - _height / 2) * ySeparation, 0), Quaternion.identity, transform);
+                        GameObject.Instantiate(GetWall(), new Vector3((i - _width / 2) * xSeparation, (j - _height / 2) * ySeparation, 0), Quaternion.identity, transform);
+                }
+                else
+                {
+                    if (j < _height - 1 && _map[i, j + 1] == 1)
+                        GameObject.Instantiate(GetFloorBorder(), new Vector3((i - _width / 2) * xSeparation, (j - _height / 2) * ySeparation, 0), Quaternion.identity, transform);
+                    else
+                        GameObject.Instantiate(GetFloor(), new Vector3((i - _width / 2) * xSeparation, (j - _height / 2) * ySeparation, 0), Quaternion.identity, transform);
                 }
             }
         }
+    }
+
+    private GameObject GetFloor()
+    {
+        if (mapTiles.floor.Length > 1)
+        {
+            int r = UnityEngine.Random.Range(0, mapTiles.floor.Length);
+            return mapTiles.floor[r];
+        }
+        return mapTiles.floor[0];
+    }
+
+    private GameObject GetFloorBorder()
+    {
+        if (mapTiles.floorBorder.Length > 1)
+        {
+            int r = UnityEngine.Random.Range(0, mapTiles.floorBorder.Length);
+            return mapTiles.floorBorder[r];
+        }
+        return mapTiles.floorBorder[0];
+    }
+
+    private GameObject GetWall()
+    {
+        if (mapTiles.wall.Length > 1)
+        {
+            int r = UnityEngine.Random.Range(0, mapTiles.wall.Length);
+            return mapTiles.wall[r];
+        }
+        return mapTiles.wall[0];
+    }
+
+    private GameObject GetWallBorder()
+    {
+        if (mapTiles.wallBorder.Length > 1)
+        {
+            int r = UnityEngine.Random.Range(0, mapTiles.wallBorder.Length);
+            return mapTiles.wallBorder[r];
+        }
+        return mapTiles.wallBorder[0];
     }
 }

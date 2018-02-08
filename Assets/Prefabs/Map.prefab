@@ -52,11 +52,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   genType: 0
-  mapWidth: 20
-  mapHeight: 20
-  fillPercentage: 30
-  smoothing: 1
-  mapTile: {fileID: 1553245965750086, guid: 8bfeacd735a61d14790d19e0026eebe2, type: 2}
+  mapWidth: 40
+  mapHeight: 40
+  fillPercentage: 50
+  smoothing: 0
+  mapTiles:
+    floorBorder: {fileID: 1403386890473102, guid: c3ee8bfbea5b30f45924bdaf862b4ede,
+      type: 2}
+    floor:
+    - {fileID: 1153184582127340, guid: 776e47cb211912b4ca9bf5dd6fa36937, type: 2}
+    - {fileID: 1769951511065834, guid: 67c5800a3d067134b9063da065a99d3f, type: 2}
+    - {fileID: 1407948446957752, guid: 9b73057a965658947b1206b68271136a, type: 2}
+    wallBorder: {fileID: 1627287130344246, guid: aff5f93901233324c8d8b365ca8a3116,
+      type: 2}
+    wall:
+    - {fileID: 1061223022864530, guid: b608cca10168be045b0bf2a7edb8f251, type: 2}
+    - {fileID: 1479324736080922, guid: fa68171e35383154c9b3564aaf9dc434, type: 2}
+    - {fileID: 1948243507080570, guid: c7045f365996c0e4c8b3a05ccd56fd63, type: 2}
   xSeparation: 7
   ySeparation: 6
   border: 6
